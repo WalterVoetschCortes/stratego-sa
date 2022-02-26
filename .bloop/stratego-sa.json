@@ -1,0 +1,591 @@
+{
+    "version": "1.4.0",
+    "project": {
+        "name": "stratego-sa",
+        "directory": "/Users/cortes/Desktop/Softwarearchitekturen/Stratego-SA",
+        "workspaceDir": "/Users/cortes/Desktop/Softwarearchitekturen/Stratego-SA",
+        "sources": [
+            "/Users/cortes/Desktop/Softwarearchitekturen/Stratego-SA/src/main/scala-2.12",
+            "/Users/cortes/Desktop/Softwarearchitekturen/Stratego-SA/src/main/scala",
+            "/Users/cortes/Desktop/Softwarearchitekturen/Stratego-SA/src/main/java",
+            "/Users/cortes/Desktop/Softwarearchitekturen/Stratego-SA/target/scala-2.12/src_managed/main"
+        ],
+        "dependencies": [
+            
+        ],
+        "classpath": [
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.7/scala-library-2.12.7.jar",
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalactic/scalactic_2.12/3.1.1/scalactic_2.12-3.1.1.jar",
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-swing_2.12/2.0.3/scala-swing_2.12-2.0.3.jar",
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/inject/guice/4.2.3/guice-4.2.3.jar",
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/net/codingwell/scala-guice_2.12/4.2.10/scala-guice_2.12-4.2.10.jar",
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.2.0/scala-xml_2.12-1.2.0.jar",
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-json_2.12/2.6.6/play-json_2.12-2.6.6.jar",
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.12.7/scala-reflect-2.12.7.jar",
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/javax/inject/javax.inject/1/javax.inject-1.jar",
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/aopalliance/aopalliance/1.0/aopalliance-1.0.jar",
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/guava/guava/27.1-jre/guava-27.1-jre.jar",
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar",
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-functional_2.12/2.6.6/play-functional_2.12-2.6.6.jar",
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/typelevel/macro-compat_2.12/1.1.1/macro-compat_2.12-1.1.1.jar",
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/joda-time/joda-time/2.9.9/joda-time-2.9.9.jar",
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.8.9/jackson-core-2.8.9.jar",
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.8.9/jackson-annotations-2.8.9.jar",
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.8.9/jackson-databind-2.8.9.jar",
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.8.9/jackson-datatype-jdk8-2.8.9.jar",
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.8.9/jackson-datatype-jsr310-2.8.9.jar",
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar",
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar",
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/checkerframework/checker-qual/2.5.2/checker-qual-2.5.2.jar",
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.2.0/error_prone_annotations-2.2.0.jar",
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/j2objc/j2objc-annotations/1.1/j2objc-annotations-1.1.jar",
+            "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/codehaus/mojo/animal-sniffer-annotations/1.17/animal-sniffer-annotations-1.17.jar"
+        ],
+        "out": "/Users/cortes/Desktop/Softwarearchitekturen/Stratego-SA/.bloop/stratego-sa",
+        "classesDir": "/Users/cortes/Desktop/Softwarearchitekturen/Stratego-SA/.bloop/stratego-sa/scala-2.12/classes",
+        "resources": [
+            "/Users/cortes/Desktop/Softwarearchitekturen/Stratego-SA/src/main/resources",
+            "/Users/cortes/Desktop/Softwarearchitekturen/Stratego-SA/target/scala-2.12/resource_managed/main"
+        ],
+        "scala": {
+            "organization": "org.scala-lang",
+            "name": "scala-compiler",
+            "version": "2.12.7",
+            "options": [
+                
+            ],
+            "jars": [
+                "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-compiler/2.12.7/scala-compiler-2.12.7.jar",
+                "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.7/scala-library-2.12.7.jar",
+                "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.12.7/scala-reflect-2.12.7.jar",
+                "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.0.6/scala-xml_2.12-1.0.6.jar",
+                "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/jline/jline/2.14.6/jline-2.14.6.jar"
+            ],
+            "setup": {
+                "order": "mixed",
+                "addLibraryToBootClasspath": true,
+                "addCompilerToClasspath": false,
+                "addExtraJarsToClasspath": false,
+                "manageBootClasspath": true,
+                "filterLibraryFromClasspath": true
+            }
+        },
+        "java": {
+            "options": [
+                
+            ]
+        },
+        "test": {
+            "frameworks": [
+                {
+                    "names": [
+                        "org.scalacheck.ScalaCheckFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.specs2.runner.Specs2Framework",
+                        "org.specs2.runner.SpecsFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.specs.runner.SpecsFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.scalatest.tools.Framework",
+                        "org.scalatest.tools.ScalaTestFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "com.novocode.junit.JUnitFramework"
+                    ]
+                }
+            ],
+            "options": {
+                "excludes": [
+                    
+                ],
+                "arguments": [
+                    
+                ]
+            }
+        },
+        "platform": {
+            "name": "jvm",
+            "config": {
+                "home": "/Users/cortes/.jabba/jdk/adopt@1.11.0-11/Contents/Home",
+                "options": [
+                    "-Duser.dir=/Users/cortes/Desktop/Softwarearchitekturen/Stratego-SA"
+                ]
+            },
+            "mainClass": [
+                
+            ]
+        },
+        "resolution": {
+            "modules": [
+                {
+                    "organization": "org.scala-lang",
+                    "name": "scala-library",
+                    "version": "2.12.7",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-library",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.7/scala-library-2.12.7.jar"
+                        },
+                        {
+                            "name": "scala-library",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.7/scala-library-2.12.7-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scalactic",
+                    "name": "scalactic_2.12",
+                    "version": "3.1.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scalactic_2.12",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalactic/scalactic_2.12/3.1.1/scalactic_2.12-3.1.1.jar"
+                        },
+                        {
+                            "name": "scalactic_2.12",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalactic/scalactic_2.12/3.1.1/scalactic_2.12-3.1.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang.modules",
+                    "name": "scala-swing_2.12",
+                    "version": "2.0.3",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-swing_2.12",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-swing_2.12/2.0.3/scala-swing_2.12-2.0.3.jar"
+                        },
+                        {
+                            "name": "scala-swing_2.12",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-swing_2.12/2.0.3/scala-swing_2.12-2.0.3-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.google.inject",
+                    "name": "guice",
+                    "version": "4.2.3",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "guice",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/inject/guice/4.2.3/guice-4.2.3.jar"
+                        },
+                        {
+                            "name": "guice",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/inject/guice/4.2.3/guice-4.2.3-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "net.codingwell",
+                    "name": "scala-guice_2.12",
+                    "version": "4.2.10",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-guice_2.12",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/net/codingwell/scala-guice_2.12/4.2.10/scala-guice_2.12-4.2.10.jar"
+                        },
+                        {
+                            "name": "scala-guice_2.12",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/net/codingwell/scala-guice_2.12/4.2.10/scala-guice_2.12-4.2.10-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang.modules",
+                    "name": "scala-xml_2.12",
+                    "version": "1.2.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-xml_2.12",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.2.0/scala-xml_2.12-1.2.0.jar"
+                        },
+                        {
+                            "name": "scala-xml_2.12",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.2.0/scala-xml_2.12-1.2.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.play",
+                    "name": "play-json_2.12",
+                    "version": "2.6.6",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "play-json_2.12",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-json_2.12/2.6.6/play-json_2.12-2.6.6.jar"
+                        },
+                        {
+                            "name": "play-json_2.12",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-json_2.12/2.6.6/play-json_2.12-2.6.6-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang",
+                    "name": "scala-reflect",
+                    "version": "2.12.7",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-reflect",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.12.7/scala-reflect-2.12.7.jar"
+                        },
+                        {
+                            "name": "scala-reflect",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.12.7/scala-reflect-2.12.7-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "javax.inject",
+                    "name": "javax.inject",
+                    "version": "1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "javax.inject",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/javax/inject/javax.inject/1/javax.inject-1.jar"
+                        },
+                        {
+                            "name": "javax.inject",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/javax/inject/javax.inject/1/javax.inject-1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "aopalliance",
+                    "name": "aopalliance",
+                    "version": "1.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "aopalliance",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/aopalliance/aopalliance/1.0/aopalliance-1.0.jar"
+                        },
+                        {
+                            "name": "aopalliance",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/aopalliance/aopalliance/1.0/aopalliance-1.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.google.guava",
+                    "name": "guava",
+                    "version": "27.1-jre",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "guava",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/guava/guava/27.1-jre/guava-27.1-jre.jar"
+                        },
+                        {
+                            "name": "guava",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/guava/guava/27.1-jre/guava-27.1-jre-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.google.code.findbugs",
+                    "name": "jsr305",
+                    "version": "3.0.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jsr305",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar"
+                        },
+                        {
+                            "name": "jsr305",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.play",
+                    "name": "play-functional_2.12",
+                    "version": "2.6.6",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "play-functional_2.12",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-functional_2.12/2.6.6/play-functional_2.12-2.6.6.jar"
+                        },
+                        {
+                            "name": "play-functional_2.12",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/typesafe/play/play-functional_2.12/2.6.6/play-functional_2.12-2.6.6-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.typelevel",
+                    "name": "macro-compat_2.12",
+                    "version": "1.1.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "macro-compat_2.12",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/typelevel/macro-compat_2.12/1.1.1/macro-compat_2.12-1.1.1.jar"
+                        },
+                        {
+                            "name": "macro-compat_2.12",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/typelevel/macro-compat_2.12/1.1.1/macro-compat_2.12-1.1.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "joda-time",
+                    "name": "joda-time",
+                    "version": "2.9.9",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "joda-time",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/joda-time/joda-time/2.9.9/joda-time-2.9.9.jar"
+                        },
+                        {
+                            "name": "joda-time",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/joda-time/joda-time/2.9.9/joda-time-2.9.9-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.fasterxml.jackson.core",
+                    "name": "jackson-core",
+                    "version": "2.8.9",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jackson-core",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.8.9/jackson-core-2.8.9.jar"
+                        },
+                        {
+                            "name": "jackson-core",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.8.9/jackson-core-2.8.9-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.fasterxml.jackson.core",
+                    "name": "jackson-annotations",
+                    "version": "2.8.9",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jackson-annotations",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.8.9/jackson-annotations-2.8.9.jar"
+                        },
+                        {
+                            "name": "jackson-annotations",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.8.9/jackson-annotations-2.8.9-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.fasterxml.jackson.core",
+                    "name": "jackson-databind",
+                    "version": "2.8.9",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jackson-databind",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.8.9/jackson-databind-2.8.9.jar"
+                        },
+                        {
+                            "name": "jackson-databind",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.8.9/jackson-databind-2.8.9-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.fasterxml.jackson.datatype",
+                    "name": "jackson-datatype-jdk8",
+                    "version": "2.8.9",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jackson-datatype-jdk8",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.8.9/jackson-datatype-jdk8-2.8.9.jar"
+                        },
+                        {
+                            "name": "jackson-datatype-jdk8",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.8.9/jackson-datatype-jdk8-2.8.9-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.fasterxml.jackson.datatype",
+                    "name": "jackson-datatype-jsr310",
+                    "version": "2.8.9",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "jackson-datatype-jsr310",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.8.9/jackson-datatype-jsr310-2.8.9.jar"
+                        },
+                        {
+                            "name": "jackson-datatype-jsr310",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.8.9/jackson-datatype-jsr310-2.8.9-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.google.guava",
+                    "name": "failureaccess",
+                    "version": "1.0.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "failureaccess",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar"
+                        },
+                        {
+                            "name": "failureaccess",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.google.guava",
+                    "name": "listenablefuture",
+                    "version": "9999.0-empty-to-avoid-conflict-with-guava",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "listenablefuture",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.checkerframework",
+                    "name": "checker-qual",
+                    "version": "2.5.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "checker-qual",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/checkerframework/checker-qual/2.5.2/checker-qual-2.5.2.jar"
+                        },
+                        {
+                            "name": "checker-qual",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/checkerframework/checker-qual/2.5.2/checker-qual-2.5.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.google.errorprone",
+                    "name": "error_prone_annotations",
+                    "version": "2.2.0",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "error_prone_annotations",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.2.0/error_prone_annotations-2.2.0.jar"
+                        },
+                        {
+                            "name": "error_prone_annotations",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.2.0/error_prone_annotations-2.2.0-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.google.j2objc",
+                    "name": "j2objc-annotations",
+                    "version": "1.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "j2objc-annotations",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/j2objc/j2objc-annotations/1.1/j2objc-annotations-1.1.jar"
+                        },
+                        {
+                            "name": "j2objc-annotations",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/google/j2objc/j2objc-annotations/1.1/j2objc-annotations-1.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.codehaus.mojo",
+                    "name": "animal-sniffer-annotations",
+                    "version": "1.17",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "animal-sniffer-annotations",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/codehaus/mojo/animal-sniffer-annotations/1.17/animal-sniffer-annotations-1.17.jar"
+                        },
+                        {
+                            "name": "animal-sniffer-annotations",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/codehaus/mojo/animal-sniffer-annotations/1.17/animal-sniffer-annotations-1.17-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang",
+                    "name": "scala-library",
+                    "version": "2.12.7",
+                    "configurations": "optional",
+                    "artifacts": [
+                        {
+                            "name": "scala-library",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.7/scala-library-2.12.7.jar"
+                        },
+                        {
+                            "name": "scala-library",
+                            "classifier": "sources",
+                            "path": "/Users/cortes/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.7/scala-library-2.12.7-sources.jar"
+                        }
+                    ]
+                }
+            ]
+        },
+        "tags": [
+            "library"
+        ]
+    }
+}

@@ -1,0 +1,4 @@
+[debug] [stratego-sa-test] Classpath dependencies List()
+[debug] [stratego-sa-test] Dependencies from configurations List(stratego-sa)
+[debug] Bloop wrote the configuration of project 'stratego-sa-test' to '/Users/cortes/Desktop/Softwarearchitekturen/Stratego-SA/.bloop/stratego-sa-test.json'
+[success] Generated .bloop/stratego-sa-test.json
