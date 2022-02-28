@@ -72,7 +72,20 @@ class SetFrame(controller:ControllerInterface) extends Frame {
 
   val message = new Label{
     text= "<html>"+ "Welcome to STRATEGO!<br><br> " + controller.playerList(0).toString + " it's your turn. " +
-      "</html>"
+      "Set your figures on the blue fields with following keystrokes:<br><br>" +
+      "Bomb        (B) with B<br>" +
+      "Marshal     (M) with M<br>" +
+      "General     (9) with 9<br>" +
+      "Colonel     (8) with 8<br>" +
+      "Major       (7) with 7<br>" +
+      "Captain     (6) with 6<br>" +
+      "Lieutenant  (5) with 5<br>" +
+      "Sergeant    (4) with 4<br>" +
+      "Miner       (3) with 3<br>" +
+      "Scout       (2) with 2<br>" +
+      "Spy         (1) with 1<br>" +
+      "Flag        (F) with F<br><br>"+
+      "The figures can also be set automatically by pressing the button below </html>"
     foreground= defaultColor
     font = legendFont
   }
@@ -143,6 +156,19 @@ class SetFrame(controller:ControllerInterface) extends Frame {
        */
 
       message.text= "<html>"+ controller.playerList(1).toString + " now it's your turn. " +
+      "Set your figures on the red fields with following keystrokes:<br><br>" +
+        "Bomb        (\uD83D\uDCA3) with B<br>" +
+        "Marshal     (\uD83D\uDC82) with M<br>" +
+        "General     (9) with 9<br>" +
+        "Colonel     (8) with 8<br>" +
+        "Major       (7) with 7<br>" +
+        "Captain     (6) with 6<br>" +
+        "Lieutenant  (5) with 5<br>" +
+        "Sergeant    (4) with 4<br>" +
+        "Miner       (3) with 3<br>" +
+        "Scout       (2) with 2<br>" +
+        "Spy         (1) with 1<br>" +
+        "Flag        (\uD83C\uDFF3) with F"+
         "</html>"
 
   }

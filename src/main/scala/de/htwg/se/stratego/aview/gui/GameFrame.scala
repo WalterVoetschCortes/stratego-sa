@@ -56,6 +56,7 @@ class GameFrame(controller:ControllerInterface) extends Frame{
     background = defaultColor
     foreground= Color.WHITE
     border = defaultBorder
+    opaque = true
   }
 
   val downButton = new Button{
@@ -64,6 +65,7 @@ class GameFrame(controller:ControllerInterface) extends Frame{
     background = defaultColor
     foreground= Color.WHITE
     border = defaultBorder
+    opaque = true
   }
 
   val rightButton = new Button{
@@ -72,6 +74,7 @@ class GameFrame(controller:ControllerInterface) extends Frame{
     background = defaultColor
     foreground= Color.WHITE
     border = defaultBorder
+    opaque = true
   }
 
   val leftButton = new Button{
@@ -80,6 +83,7 @@ class GameFrame(controller:ControllerInterface) extends Frame{
     background = defaultColor
     foreground= Color.WHITE
     border = defaultBorder
+    opaque = true
   }
 
   def attackOrMove(direction: String, rowD:Int, colD:Int):Unit = {
@@ -127,7 +131,7 @@ class GameFrame(controller:ControllerInterface) extends Frame{
   }
 
   val moveButton = new RadioButton{
-    text = "  \uD83C\uDFC3 MOVE"
+    text = "MOVE"
     selected = true
     font= font.deriveFont(1, 40)
     foreground = defaultColor
@@ -135,7 +139,7 @@ class GameFrame(controller:ControllerInterface) extends Frame{
   }
 
   val attackButton = new RadioButton{
-    text = "  \uD83D\uDC4A ATTACK"
+    text = "ATTACK"
     font= font.deriveFont(1, 40)
     foreground = defaultColor
     verticalAlignment=Alignment.Center

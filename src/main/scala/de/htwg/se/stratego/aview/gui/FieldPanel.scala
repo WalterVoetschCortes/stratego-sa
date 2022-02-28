@@ -25,11 +25,11 @@ class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends Fl
   def fieldText(row:Int, col:Int): String ={
     if(controller.getField.field(row,col).isSet){
       if(controller.getField.field(row,col).character.get.figure.name.equals("F")){
-        fieldText="\uD83C\uDFF3"
+        fieldText="F"
       }else if(controller.getField.field(row,col).character.get.figure.name.equals("B")){
-        fieldText="\uD83D\uDCA3"
+        fieldText="B"
       }else if(controller.getField.field(row,col).character.get.figure.name.equals("M")){
-        fieldText="\uD83D\uDC82"
+        fieldText="M"
       }else{
         fieldText= controller.getField.field(row, col).character.get.figure.name
       }
