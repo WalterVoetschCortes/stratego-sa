@@ -51,6 +51,7 @@ class PlayerFrame(controller:ControllerInterface) extends Frame{
     text = "Welcome to"
     foreground= defaultColor
     font = defaultFont
+    opaque = true
   }
 
   def welcomePanel = new FlowPanel() {
@@ -78,22 +79,22 @@ class PlayerFrame(controller:ControllerInterface) extends Frame{
   val next = new Button{
     text = "Play"
     font = defaultFont
-    background = defaultColor
-    foreground= Color.WHITE
+    foreground= defaultColor
+    opaque = true
   }
 
   val load = new Button{
     text = "Load Game"
     font = defaultFont
-    background = lightG
-    foreground = Color.WHITE
+    foreground = defaultColor
+    opaque = true
   }
 
   val quit = new Button{
     text = "Quit"
     font = defaultFont
-    background = lightG
-    foreground = Color.WHITE
+    foreground = defaultColor
+    opaque = true
   }
 
   def emptyPanel = new FlowPanel

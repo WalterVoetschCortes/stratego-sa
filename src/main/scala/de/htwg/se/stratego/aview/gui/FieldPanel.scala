@@ -42,8 +42,9 @@ class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends Fl
   val figureText = new Button{
     text = fieldText(row,col)
     font = font.deriveFont(1, 25)
-    foreground = Color.WHITE
+    foreground = Color.BLACK
     preferredSize = new Dimension(60, 60)
+    opaque = true
 
 
     if(controller.getField.field(row,col).isSet) {

@@ -10,6 +10,7 @@ import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, 
 import javax.imageio.ImageIO
 import javax.swing.{BorderFactory, JOptionPane, WindowConstants}
 import javax.swing.border.LineBorder
+import java.io.File
 
 class GameFrame(controller:ControllerInterface) extends Frame{
 
@@ -26,7 +27,7 @@ class GameFrame(controller:ControllerInterface) extends Frame{
   val defaultColor = new Color(143,138,126)
   val defaultBorder = new LineBorder(java.awt.Color.WHITE,1)
   val grColor = new Color(79,76,70)
-  val iconImg = ImageIO.read(getClass.getResource("iconS.png"))
+  val iconImg = ImageIO.read(new File("src/main/scala/de/htwg/se/stratego/aview/gui/iconS.png"))
 
   title = "Stratego"
   iconImage = iconImg
