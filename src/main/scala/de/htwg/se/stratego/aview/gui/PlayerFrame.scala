@@ -9,22 +9,23 @@ import javax.swing.{BorderFactory, ImageIcon, JFrame, WindowConstants}
 
 import scala.swing.event.ButtonClicked
 import scala.swing.{Button, Dimension, FlowPanel, Frame, GridPanel, Label, TextField}
+import java.io.File
 
 class PlayerFrame(controller:ControllerInterface) extends Frame{
 
   listenTo(controller)
 
-  //val strategoImg = ImageIO.read(getClass.getResource("stratego.png"))
-  //val strategoI = new ImageIcon(strategoImg)
+  val strategoImg = ImageIO.read(new File("src/main/scala/de/htwg/se/stratego/aview/gui/stratego.png"))
+  val strategoI = new ImageIcon(strategoImg)
   val defaultColor = new Color(143,138,126)
   val lightG = new Color(192,192,192)
   val lightF = new Font("Calibri", 1, 25)
   val defaultFont = new Font("Calibri", Font.BOLD, 30)
   val defaultBorder = new LineBorder(java.awt.Color.WHITE,10)
-  //val iconImg = ImageIO.read(getClass.getResource("iconS.png"))
+  val iconImg = ImageIO.read(new File("src/main/scala/de/htwg/se/stratego/aview/gui/iconS.png"))
 
   title = "Stratego"
-  //iconImage = iconImg
+  iconImage = iconImg
   peer.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
   resizable= false
   //peer.setLocationRelativeTo(null)
@@ -43,7 +44,7 @@ class PlayerFrame(controller:ControllerInterface) extends Frame{
   }
 
   def img = new Label{
-    //icon = strategoI
+    icon = strategoI
   }
 
   def welcomeString = new Label{
