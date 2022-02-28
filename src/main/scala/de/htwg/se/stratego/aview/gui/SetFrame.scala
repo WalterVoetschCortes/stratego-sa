@@ -9,6 +9,7 @@ import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
 import javax.imageio.ImageIO
 import javax.swing.{BorderFactory, WindowConstants}
 import javax.swing.border.LineBorder
+import java.io.File
 
 class SetFrame(controller:ControllerInterface) extends Frame {
 
@@ -18,7 +19,7 @@ class SetFrame(controller:ControllerInterface) extends Frame {
   var fields = Array.ofDim[FieldPanel](matchFieldSize, matchFieldSize)
   var gameStatus: GameStatus = IDLE
   def statusString:String = GameStatus.getMessage(gameStatus)
-  val iconImg = ImageIO.read(getClass.getResource("iconS.png"))
+  val iconImg = ImageIO.read(new File("src/main/scala/de/htwg/se/stratego/aview/gui/iconS.png"))
   val defaultFont = new Font("Calibri", Font.BOLD, 30)
   val legendFont = new Font("Calibri", Font.BOLD, 15)
   val defaultColor = new Color(143,138,126)

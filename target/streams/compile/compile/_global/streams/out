@@ -1,4 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/cortes/Desktop/Softwarearchitekturen/Stratego-SA/src/main/scala/de/htwg/se/stratego/aview/gui/PlayerFrame.scala:27:15: not found: value iconImg[0m
-[0m[[0m[31merror[0m] [0m[0m  iconImage = iconImg[0m
-[0m[[0m[31merror[0m] [0m[0m              ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/cortes/Desktop/Softwarearchitekturen/Stratego-SA/src/main/scala/de/htwg/se/stratego/aview/gui/SetFrame.scala:21:34: not found: type File[0m
+[0m[[0m[31merror[0m] [0m[0m  val iconImg = ImageIO.read(new File("src/main/scala/de/htwg/se/stratego/aview/gui/iconS.png"))[0m
+[0m[[0m[31merror[0m] [0m[0m                                 ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m
