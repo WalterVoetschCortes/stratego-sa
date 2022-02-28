@@ -1,7 +1,7 @@
 ![stratego](https://user-images.githubusercontent.com/64639703/87684761-e9c68980-c782-11ea-91d6-d04b58b7a369.png)
 
 
-A little info about our project STRATEGO for our class Software Engineering at the University of Applied Science HTWG Konstanz.
+A little info about our project STRATEGO for our class Software Architecture at the University of Applied Science HTWG Konstanz.
 
 ## Build Status
 
@@ -60,7 +60,7 @@ You can see screenshots of the GUI below:
 
 ## Contributors
 
-[![GitHub contributors](https://img.shields.io/github/contributors/Naereen/StrapDown.js.svg)](https://github.com/BenjaminMannsdoerfer/Stratego/graphs/contributors)
+[![GitHub contributors](https://img.shields.io/github/contributors/Naereen/StrapDown.js.svg)](https://github.com/WalterVoetschCortes/stratego-sa/graphs/contributors)
 
 ## Disclaimer
 
