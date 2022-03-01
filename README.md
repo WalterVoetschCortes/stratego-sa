@@ -7,7 +7,7 @@ A little info about our project STRATEGO for our class Software Architecture at 
 
 Build status of continus integration with travis
 
-[![Build Status](https://travis-ci.com/BenjaminMannsdoerfer/Stratego.svg?branch=master)](https://travis-ci.com/BenjaminMannsdoerfer/Stratego)
+[![Build Status](https://app.travis-ci.com/WalterVoetschCortes/stratego-sa.svg?branch=main)](https://app.travis-ci.com/WalterVoetschCortes/stratego-sa)
 
 
 ## Code Status
