@@ -66,3 +66,4 @@ You can see screenshots of the GUI below:
 
 This project only uses parts of the gameplay logic and media of STRATEGO without any commercial interest and is only for educational purposes.
 
+test
