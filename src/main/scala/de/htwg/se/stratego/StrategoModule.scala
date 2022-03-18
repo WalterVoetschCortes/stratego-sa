@@ -6,10 +6,9 @@ import de.htwg.se.stratego.controller.controllerComponent.ControllerInterface
 import de.htwg.se.stratego.model.fileIoComponent.FileIOInterface
 import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldAvancedImpl.MatchField
-import net.codingwell.scalaguice.ScalaModule
 import de.htwg.se.stratego.model.fileIoComponent._
 
-class StrategoModule extends AbstractModule with ScalaModule{
+class StrategoModule extends AbstractModule{
 
   val defaultSize:Int = 10
   val defaultSet:Boolean = false
@@ -18,14 +17,14 @@ class StrategoModule extends AbstractModule with ScalaModule{
 
     bindConstant().annotatedWith(Names.named("DefaultSize")).to(defaultSize)
     bindConstant().annotatedWith(Names.named("DefaultSet")).to(defaultSet)
-    bind[MatchFieldInterface].to[MatchField]
-    bind[ControllerInterface].to[controller.controllerComponent.controllerBaseImpl.Controller]
+    bind(classOf[MatchFieldInterface]).to(classOf[MatchField])
+    bind(classOf[ControllerInterface]).to(classOf[controller.controllerComponent.controllerBaseImpl.Controller])
 
-    bind[MatchFieldInterface].annotatedWithName("tiny").toInstance(new MatchField(defaultSize, defaultSize, defaultSet))
-    bind[MatchFieldInterface].annotatedWithName("small").toInstance(new MatchField(6, 6, defaultSet))
-    bind[MatchFieldInterface].annotatedWithName("normal").toInstance(new MatchField(10, 10, defaultSet))
+    bind(classOf[MatchFieldInterface]).annotatedWith(Names.named("tiny")).toInstance(new MatchField(defaultSize, defaultSize, defaultSet))
+    bind(classOf[MatchFieldInterface]).annotatedWith(Names.named("small")).toInstance(new MatchField(6, 6, defaultSet))
+    bind(classOf[MatchFieldInterface]).annotatedWith(Names.named("normal")).toInstance(new MatchField(10, 10, defaultSet))
 
-    bind[FileIOInterface].to[fileIoXmlImpl.FileIO]
+    bind(classOf[FileIOInterface]).to(classOf[fileIoXmlImpl.FileIO])
 
   }
 

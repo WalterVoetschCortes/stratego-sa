@@ -33,7 +33,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
     state.handle(input)
   }
 
-  def welcome():String = {
+  def welcome:String = {
     "Welcome to STRATEGO! " +
       "Please enter first name of Player1 and then of Player2 like (player1 player2)!"
   }
@@ -55,7 +55,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
     "created new matchfield\nPlease enter the names like (player1 player2)"
   }
 
-  def initMatchfield(): String = {
+  def initMatchfield: String = {
     var newMatchField = matchField
     newMatchField = game.init(matchField)
     if (matchField.equals(newMatchField)) {
@@ -65,7 +65,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
       gameStatus=INIT
       nextState
       publish(new MachtfieldInitialized)
-      playerList(currentPlayerIndex) + " it's your turn!"
+      "" + playerList(currentPlayerIndex) + " it's your turn!"
     }
   }
 

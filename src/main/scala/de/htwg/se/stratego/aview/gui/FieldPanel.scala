@@ -125,6 +125,6 @@ class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends Fl
       figureText.background = colBrown
     }
     contents += field
-    repaint
+    repaint()
   }
 }

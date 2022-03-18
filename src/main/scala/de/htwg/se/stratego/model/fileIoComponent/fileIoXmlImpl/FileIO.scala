@@ -57,7 +57,7 @@ class FileIO extends FileIOInterface{
     import java.io._
     val pw = new PrintWriter(new File("matchField.xml"))
     val prettyPrinter = new PrettyPrinter(120,4)
-    val playerS = players(0) + " " + players(1)
+    val playerS = "" + players(0) + " " + players(1)
     val xml = prettyPrinter.format(matchFieldToXml(matchField, currentPlayerIndex, playerS))
     pw.write(xml)
     pw.close

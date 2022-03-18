@@ -93,11 +93,11 @@ class GameFrame(controller:ControllerInterface) extends Frame{
           controller.handle("a"+(c.r).toString+(c.c).toString+(c.r+rowD).toString+(c.c+colD).toString)
           gameStatus=ATTACK
           c.isClicked=false
-          repaint
+          repaint()
         }else{
           controller.handle("m" + direction + c.r.toString+ c.c.toString)
           c.isClicked= false
-          repaint
+          repaint()
         }
       }
     })
@@ -264,14 +264,14 @@ class GameFrame(controller:ControllerInterface) extends Frame{
       message.foreground= colBlue
     }
 
-    repaint
+    repaint()
   }
 
   reactions += {
     case event: FieldChanged     => redraw
     case event: GameFinished     =>
       JOptionPane.showMessageDialog(null,
-        controller.playerList(controller.currentPlayerIndex) + " you have won the game!")
+        "" + controller.playerList(controller.currentPlayerIndex) + " you have won the game!")
       visible = false
       deafTo(controller)
       close()

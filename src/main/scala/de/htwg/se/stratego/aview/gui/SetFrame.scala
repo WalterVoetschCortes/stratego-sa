@@ -132,7 +132,7 @@ class SetFrame(controller:ControllerInterface) extends Frame {
       column <- 0 until matchFieldSize
     } fields(row)(column).redraw
     status.text = controller.statusString
-    repaint
+    repaint()
   }
 
   reactions += {

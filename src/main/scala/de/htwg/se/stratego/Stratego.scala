@@ -15,10 +15,9 @@ object Stratego {
   val gui = new PlayerFrame(controller)
 
   def main(args: Array[String]): Unit = {
-    var input = ""
-    do {
+    var input = "";
+    while (!input.equals("q"))
       input = readLine()
       println(tui.processInputLine(input))
-    } while (!input.equals("q"))
   }
 }
