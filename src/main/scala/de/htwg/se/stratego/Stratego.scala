@@ -7,17 +7,14 @@ import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface}
 
 import scala.io.StdIn.readLine
 
-object Stratego {
+@main def Stratego = 
 
   val injector = Guice.createInjector(new StrategoModule)
   val controller = injector.getInstance(classOf[ControllerInterface])
   val tui = new Tui(controller)
   val gui = new PlayerFrame(controller)
 
-  def main(args: Array[String]): Unit = {
-    var input = "";
-    while (!input.equals("q"))
-      input = readLine()
-      println(tui.processInputLine(input))
-  }
-}
+  var input = "";
+  while (!input.equals("q"))
+    input = readLine()
+    println(tui.processInputLine(input))
