@@ -11,7 +11,7 @@ import javax.swing.{BorderFactory, WindowConstants}
 import javax.swing.border.LineBorder
 import java.io.File
 
-class SetFrame(controller:ControllerInterface) extends Frame {
+class SetFrame(controller:ControllerInterface) extends Frame :
 
   listenTo(controller)
 
@@ -32,17 +32,17 @@ class SetFrame(controller:ControllerInterface) extends Frame {
   //peer.setLocationRelativeTo(null)
   visible=true
 
-  def matchfieldPanel = new GridPanel(matchFieldSize,matchFieldSize){
-    for{
+  def matchfieldPanel = new GridPanel(matchFieldSize,matchFieldSize)
+    for
       row <- 0 until matchFieldSize
       col <- 0 until matchFieldSize
-    }{
+    do
       val fieldPanel = new FieldPanel(row, col, controller)
       fields(row)(col) = fieldPanel
       contents += fieldPanel
       listenTo(fieldPanel)
-    }
-  }
+
+
 
   val initializeButton = new Button{
     text = "set characters automatically"
@@ -126,14 +126,14 @@ class SetFrame(controller:ControllerInterface) extends Frame {
     }
   }
 
-  def redraw: Unit = {
+  def redraw: Unit =
     for {
       row <- 0 until matchFieldSize
       column <- 0 until matchFieldSize
-    } fields(row)(column).redraw
-    status.text = controller.statusString
-    repaint()
-  }
+    do
+      fields(row)(column).redraw
+      status.text = controller.statusString
+      repaint()
 
   reactions += {
     case event: FieldChanged     => redraw
@@ -172,4 +172,4 @@ class SetFrame(controller:ControllerInterface) extends Frame {
         "</html>"
 
   }
-}
+
