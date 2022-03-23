@@ -10,7 +10,7 @@ import de.htwg.se.stratego.model.fileIoComponent._
 
 class StrategoModule extends AbstractModule:
 
-  val defaultSize:Int = 10
+  val defaultSize:Int = 4
   val defaultSet:Boolean = false
 
   override def configure():Unit = 
