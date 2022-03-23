@@ -12,7 +12,7 @@ import javax.swing.{BorderFactory, JOptionPane, WindowConstants}
 import javax.swing.border.LineBorder
 import java.io.File
 
-class GameFrame(controller:ControllerInterface) extends Frame{
+class GameFrame(controller:ControllerInterface) extends Frame:
 
   listenTo(controller)
 
@@ -39,15 +39,14 @@ class GameFrame(controller:ControllerInterface) extends Frame{
 
   def matchfieldPanel = new GridPanel(matchFieldSize,matchFieldSize){
     background = colGreen
-    for{
+    for
       row <- 0 until matchFieldSize
       col <- 0 until matchFieldSize
-    }{
+    do
       val fieldPanel = new FieldPanel(row, col, controller)
       fields(row)(col) = fieldPanel
       contents += fieldPanel
       listenTo(fieldPanel)
-    }
   }
 
   val upButton = new Button{
@@ -87,20 +86,18 @@ class GameFrame(controller:ControllerInterface) extends Frame{
   }
 
   def attackOrMove(direction: String, rowD:Int, colD:Int):Unit = {
-    fields.foreach(r => for(c<- r){
-      if(c.isClicked) {
-        if(optionAttack){
+    fields.foreach(r => for(c<- r) do
+      if c.isClicked then
+        if optionAttack then
           controller.handle("a"+(c.r).toString+(c.c).toString+(c.r+rowD).toString+(c.c+colD).toString)
           gameStatus=ATTACK
           c.isClicked=false
           repaint()
-        }else{
+        else
           controller.handle("m" + direction + c.r.toString+ c.c.toString)
           c.isClicked= false
           repaint()
-        }
-      }
-    })
+    )
   }
 
   def lrPanel = new GridPanel(1,2){
@@ -251,18 +248,17 @@ class GameFrame(controller:ControllerInterface) extends Frame{
   }
 
   def redraw: Unit = {
-    for {
+    for 
       row <- 0 until matchFieldSize
       column <- 0 until matchFieldSize
-    } fields(row)(column).redraw
+    do fields(row)(column).redraw
     status.text = controller.statusString
 
     message.text = "<html>"+controller.playerList(controller.currentPlayerIndex) +"!<br>It's your turn!</html>"
-    if(controller.currentPlayerIndex.equals(1)){
+    if controller.currentPlayerIndex.equals(1) then
       message.foreground= colRed
-    }else{
+    else
       message.foreground= colBlue
-    }
 
     repaint()
   }
@@ -287,4 +283,4 @@ class GameFrame(controller:ControllerInterface) extends Frame{
 
   pack()
 
-}
+

@@ -92,7 +92,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
 
     if rowD <= matchField.fields.matrixSize - 1 && rowD >= 0 && colD >= 0 && colD <= matchField.fields.matrixSize - 1 &&
       matchField.fields.field(rowA,colA).isSet && matchField.fields.field(rowA,colA).colour.get.value==currentPlayerIndex
-      && matchField.fields.field(rowD,colD).isSet && matchField.fields.field(rowD,colD).colour.get.value!= currentPlayerIndex) then
+      && matchField.fields.field(rowD,colD).isSet && matchField.fields.field(rowD,colD).colour.get.value!= currentPlayerIndex then
       matchField = game.Context.attack(matchField, rowA, colA, rowD, colD,currentPlayerIndex)
       gameStatus = ATTACK
       currentPlayerIndex= nextPlayer

@@ -7,8 +7,8 @@ class Tui(controller: ControllerInterface) extends Reactor :
   listenTo(controller)
   val size = controller.getSize
 
-  def processInputLine(input: String):String = {
-    input match {
+  def processInputLine(input: String):String = 
+    input match 
       case "q" =>"Bye bye!"
       case "n" => controller.createEmptyMatchfield(size)
       case "z" => controller.undo
@@ -16,9 +16,7 @@ class Tui(controller: ControllerInterface) extends Reactor :
       case "s" => controller.save
       case "l" => controller.load
       case _ => controller.handle(input)
-    }
-  }
-
+    
   reactions +={
     case event: FieldChanged => printTui
     case event: PlayerChanged => println("Hello " + controller.playerList(0) + " and "+ controller.playerList(1) + "!")
@@ -30,7 +28,6 @@ class Tui(controller: ControllerInterface) extends Reactor :
     case event: PlayerSwitch => println("" + controller.playerList(controller.currentPlayerIndex) + " it's youre turn!")
   }
 
-  def printTui: Unit = {
+  def printTui: Unit = 
     println(controller.matchFieldToString)
     println(GameStatus.getMessage(controller.gameStatus))
-  }

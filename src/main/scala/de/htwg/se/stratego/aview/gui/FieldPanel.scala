@@ -8,7 +8,7 @@ import scala.swing.{Button, Color, Dimension, FlowPanel}
 import de.htwg.se.stratego.controller.controllerComponent.ControllerInterface
 import javax.swing.border.LineBorder
 
-class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends FlowPanel {
+class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends FlowPanel:
 
   var fieldText = " "
   var isClicked = false
@@ -22,22 +22,18 @@ class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends Fl
 
   background = colGreen
 
-  def fieldText(row:Int, col:Int): String ={
-    if(controller.getField.field(row,col).isSet){
-      if(controller.getField.field(row,col).character.get.figure.name.equals("F")){
+  def fieldText(row:Int, col:Int): String =
+    if controller.getField.field(row,col).isSet then
+      if controller.getField.field(row,col).character.get.figure.name.equals("F") then
         fieldText="F"
-      }else if(controller.getField.field(row,col).character.get.figure.name.equals("B")){
+      else if (controller.getField.field(row,col).character.get.figure.name.equals("B"))
         fieldText="B"
-      }else if(controller.getField.field(row,col).character.get.figure.name.equals("M")){
+      else if (controller.getField.field(row,col).character.get.figure.name.equals("M"))
         fieldText="M"
-      }else{
+      else
         fieldText= controller.getField.field(row, col).character.get.figure.name
-      }
       fieldText
-    }
     else " "
-  }
-
 
   val figureText = new Button{
     text = fieldText(row,col)
@@ -47,15 +43,13 @@ class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends Fl
     opaque = true
 
 
-    if(controller.getField.field(row,col).isSet) {
-      if (controller.getField.field(row, col).colour.get.value == 0) {
+    if controller.getField.field(row,col).isSet then
+      if controller.getField.field(row, col).colour.get.value == 0 then
         background = colBlue
-      } else if (controller.getField.field(row, col).colour.get.value == 1) {
+      else if (controller.getField.field(row, col).colour.get.value == 1)
         background = colRed
-      }
-      }else{
+      else
         background = colGreen
-    }
 
     listenTo(keys)
     reactions += {
@@ -104,27 +98,23 @@ class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends Fl
 
     isClicked = false
 
-    if(controller.getField.field(row,col).isSet){
-      if(controller.getField.field(row, col).colour.get.value == controller.currentPlayerIndex){
+    if controller.getField.field(row,col).isSet then
+      if controller.getField.field(row, col).colour.get.value == controller.currentPlayerIndex then
         figureText.text=fieldText(row,col)
-      } else{
+      else
         figureText.text=""
         figureText.icon = null
-      }
-    }else{
+    else
       figureText.text=""
-    }
 
-    if(controller.getField.field(row,col).isSet) {
-      if (controller.getField.field(row, col).colour.get.value == 0) {
+    if controller.getField.field(row,col).isSet then
+      if controller.getField.field(row, col).colour.get.value == 0 then
         figureText.background = colBlue
-      } else if (controller.getField.field(row, col).colour.get.value == 1) {
+      else if (controller.getField.field(row, col).colour.get.value == 1)
         figureText.background = colRed
-      }
-    }else{
+    else
       figureText.background = colBrown
-    }
     contents += field
     repaint()
   }
-}
+
