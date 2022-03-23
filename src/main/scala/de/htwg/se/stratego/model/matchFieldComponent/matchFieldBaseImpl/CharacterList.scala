@@ -1,6 +1,6 @@
 package de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl
 
-case class CharacterList(size: Int){
+case class CharacterList(size: Int):
   var characterList = Seq[GameCharacter]()
 
   size match {
@@ -141,4 +141,4 @@ case class CharacterList(size: Int){
   def getCharacterList(): Seq[GameCharacter] = {
     characterList
   }
-}
+

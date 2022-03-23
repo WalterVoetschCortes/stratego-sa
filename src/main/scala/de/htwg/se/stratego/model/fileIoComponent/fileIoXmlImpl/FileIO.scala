@@ -9,7 +9,7 @@ import de.htwg.se.stratego.model.playerComponent.Player
 
 import scala.xml.PrettyPrinter
 
-class FileIO extends FileIOInterface{
+class FileIO extends FileIOInterface:
   override def load: (MatchFieldInterface,Int,String) = {
     var matchField: MatchFieldInterface = null
     val file = scala.xml.XML.loadFile("matchField.xml")
@@ -64,4 +64,4 @@ class FileIO extends FileIOInterface{
   }
 
   override def save(matchField: MatchFieldInterface, currentPlayerIndex: Int, players: List[Player]): Unit = saveString(matchField,currentPlayerIndex,players)
-}
+

@@ -2,7 +2,7 @@ package de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl
 import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
 import de.htwg.se.stratego.model.playerComponent.Player
 
-case class Game(var playerA: Player, var playerB: Player, size: Int, var matchField: MatchFieldInterface) {
+case class Game(var playerA: Player, var playerB: Player, size: Int, var matchField: MatchFieldInterface) :
   var bList = playerA.characterList
   var rList = playerB.characterList
 
@@ -210,4 +210,4 @@ case class Game(var playerA: Player, var playerB: Player, size: Int, var matchFi
       matchField
     }
   }
-}
+

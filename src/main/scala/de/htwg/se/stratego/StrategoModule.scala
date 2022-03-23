@@ -8,7 +8,7 @@ import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldAvancedImpl.MatchField
 import de.htwg.se.stratego.model.fileIoComponent._
 
-class StrategoModule extends AbstractModule{
+class StrategoModule extends AbstractModule:
 
   val defaultSize:Int = 10
   val defaultSet:Boolean = false
@@ -28,4 +28,4 @@ class StrategoModule extends AbstractModule{
 
   }
 
-}
+

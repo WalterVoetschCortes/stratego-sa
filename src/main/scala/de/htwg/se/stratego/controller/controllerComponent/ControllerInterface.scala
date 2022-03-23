@@ -6,7 +6,7 @@ import de.htwg.se.stratego.model.playerComponent.Player
 
 import scala.swing.Publisher
 
-trait ControllerInterface extends Publisher {
+trait ControllerInterface extends Publisher :
   def handle(input:String):String
   def welcome:String
   def setPlayers(input:String):String
@@ -28,7 +28,7 @@ trait ControllerInterface extends Publisher {
   def getField:Matrix[Field]
   def load:String
   def save:String
-}
+
 
 
 

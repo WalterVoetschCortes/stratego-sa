@@ -3,7 +3,7 @@ package de.htwg.se.stratego.aview
 import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, MachtfieldInitialized, NewGame, PlayerChanged, PlayerSwitch}
 
 import scala.swing.Reactor
-class Tui(controller: ControllerInterface) extends Reactor {
+class Tui(controller: ControllerInterface) extends Reactor :
   listenTo(controller)
   val size = controller.getSize
 
@@ -34,5 +34,3 @@ class Tui(controller: ControllerInterface) extends Reactor {
     println(controller.matchFieldToString)
     println(GameStatus.getMessage(controller.gameStatus))
   }
-
-}

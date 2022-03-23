@@ -13,7 +13,7 @@ import de.htwg.se.stratego.util.UndoManager
 import scala.swing.Publisher
 
 
-class Controller @Inject()(var matchField:MatchFieldInterface) extends ControllerInterface with Publisher {
+class Controller @Inject()(var matchField:MatchFieldInterface) extends ControllerInterface with Publisher :
 
   val injector = Guice.createInjector(new StrategoModule)
   val fileIO = injector.getInstance(classOf[FileIOInterface])
@@ -199,4 +199,4 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
     publish(new FieldChanged)
     "save"
   }
-}
+

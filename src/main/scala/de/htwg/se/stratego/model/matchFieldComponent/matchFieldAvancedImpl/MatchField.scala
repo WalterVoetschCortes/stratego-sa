@@ -6,7 +6,7 @@ import javax.inject.Inject
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{MatchField => BaseMatchField}
 
 class MatchField @Inject() (@Named("DefaultSize") sizeR:Int, @Named("DefaultSize") sizeC:Int,
-                            @Named("DefaultSet")isSet:Boolean) extends BaseMatchField(sizeR,sizeC,isSet ){
+                            @Named("DefaultSet")isSet:Boolean) extends BaseMatchField(sizeR,sizeC,isSet ):
   override def createNewMatchField: MatchFieldInterface = new MatchField(sizeR,sizeC,isSet)
 
-}
+

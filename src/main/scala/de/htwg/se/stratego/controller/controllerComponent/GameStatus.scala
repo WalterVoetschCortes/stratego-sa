@@ -2,7 +2,7 @@ package de.htwg.se.stratego.controller.controllerComponent
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{Field, Matrix}
 import de.htwg.se.stratego.model.playerComponent.Player
 
-object GameStatus extends Enumeration {
+object GameStatus extends Enumeration :
   type GameStatus = Value
   val IDLE, UNDO, REDO, NEW, INIT, ATTACK = Value
 
@@ -18,4 +18,4 @@ object GameStatus extends Enumeration {
   def getMessage(actualStatus: GameStatus) = {
     map(actualStatus)
   }
-}
+

@@ -12,8 +12,7 @@ import scala.io.Source
 
 
 
-class FileIO extends FileIOInterface{
-
+class FileIO extends FileIOInterface:
 
   override def load: (MatchFieldInterface,Int,String) = {
     var matchField: MatchFieldInterface = null
@@ -72,7 +71,7 @@ class FileIO extends FileIOInterface{
     pw.close()
   }
 
-}
+
 
 
 

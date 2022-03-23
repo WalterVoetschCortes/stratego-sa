@@ -1,6 +1,6 @@
 package de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl
 
-object Figure extends Enumeration {
+object Figure extends Enumeration :
   sealed case class FigureVal(name: String, value: Int){
     override def toString: String = name
   }
@@ -16,4 +16,4 @@ object Figure extends Enumeration {
   val Scout = FigureVal("2", 2)
   val Spy = FigureVal("1", 1)
   val Flag = FigureVal("F", 0)
-}
+
