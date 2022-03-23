@@ -3,9 +3,10 @@ package de.htwg.se.stratego.aview
 import de.htwg.se.stratego.aview.Tui
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.MatchField
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatest.matchers.should.Matchers
 
-class TuiSpec  extends WordSpec with Matchers{
+class TuiSpec  extends AnyWordSpec with Matchers{
 
   "A Stratego Tui" should {
     val controller = new Controller(new MatchField(4, 4, false))

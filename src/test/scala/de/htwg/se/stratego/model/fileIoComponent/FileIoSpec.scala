@@ -3,9 +3,10 @@ package de.htwg.se.stratego.model.fileIoComponent
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{CharacterList, Game, MatchField}
 import de.htwg.se.stratego.model.playerComponent.Player
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatest.matchers.should.Matchers
 
-class FileIoSpec extends WordSpec with Matchers {
+class FileIoSpec extends AnyWordSpec with Matchers {
   "FileIO" when {
     "a new Game created" should {
       val matchField = new MatchField(4, 4, false)

@@ -1,9 +1,10 @@
 package de.htwg.se.stratego.model
 
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{Field, Matrix}
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatest.matchers.should.Matchers
 
-class MatrixSpec extends WordSpec with Matchers {
+class MatrixSpec extends AnyWordSpec with Matchers {
   "A Matrix" when { "created with rowSize and colSize" should {
     val field = new Field(true)
     val matrix = new Matrix(4,4,field)

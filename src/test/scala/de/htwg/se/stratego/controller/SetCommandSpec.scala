@@ -4,20 +4,21 @@ import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.{Co
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.Figure.FigureVal
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.MatchField
 import de.htwg.se.stratego.util.{Observable, Observer}
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatest.matchers.should.Matchers
 
-class SetCommandSpec extends WordSpec with Matchers {
+class SetCommandSpec extends AnyWordSpec with Matchers {
   "A SetCommandSpec" when {
     val matchField = new MatchField(4, 4, false)
     val controller = new Controller(matchField)
-    controller.initMatchfield()
+    controller.initMatchfield
     val command = new SetCommand(0, 1,0,"9",controller)
 
 
     "created" should {
       "undoStep" in {
-        command.undoStep should be()
-        command.redoStep should be()
+        command.undoStep should be
+        command.redoStep should be
       }
     }
   }

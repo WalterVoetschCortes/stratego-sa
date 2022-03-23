@@ -1,9 +1,10 @@
 package de.htwg.se.stratego.model
 
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.Colour
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatest.matchers.should.Matchers
 
-class ColorSpec extends WordSpec with Matchers {
+class ColorSpec extends AnyWordSpec with Matchers {
 
   "A Colour" when {
 

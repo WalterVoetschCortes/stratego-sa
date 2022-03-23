@@ -3,13 +3,14 @@ package de.htwg.se.stratego.controller
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.{Controller, GameState}
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.MatchField
 import de.htwg.se.stratego.util.{Observable, Observer}
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatest.matchers.should.Matchers
 
-class GameStateSpec extends WordSpec with Matchers {
+class GameStateSpec extends AnyWordSpec with Matchers {
   "A InGameState" when {
     val matchField = new MatchField(4, 4, false)
     val controller = new Controller(matchField)
-    controller.initMatchfield()
+    controller.initMatchfield
     val state = new GameState(controller)
     "created" should {
       "handle" in {

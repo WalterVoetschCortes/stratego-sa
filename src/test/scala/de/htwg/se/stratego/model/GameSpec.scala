@@ -2,9 +2,10 @@ package de.htwg.se.stratego.model
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{CharacterList, Game, MatchField}
 import de.htwg.se.stratego.model.playerComponent.Player
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatest.matchers.should.Matchers
 
-class GameSpec extends WordSpec with Matchers {
+class GameSpec extends AnyWordSpec with Matchers {
   "A Game" when {
     val matchField = new MatchField(4, 4, false)
     val characList = CharacterList(4)

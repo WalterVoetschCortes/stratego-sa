@@ -1,8 +1,9 @@
 package de.htwg.se.stratego.model
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{Colour, Figure, GameCharacter, MatchField}
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatest.matchers.should.Matchers
 
-class MatchFieldSpec extends WordSpec with Matchers {
+class MatchFieldSpec extends AnyWordSpec with Matchers {
 
   "A MatchField" when { "created with size 4 an all fields set" should {
     val matchField = new MatchField(4, 4, true)

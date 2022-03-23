@@ -3,13 +3,14 @@ package de.htwg.se.stratego.controller
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.{Controller, SetState}
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.MatchField
 import de.htwg.se.stratego.util.{Observable, Observer}
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatest.matchers.should.Matchers
 
-class SetStateSpec extends WordSpec with Matchers {
+class SetStateSpec extends AnyWordSpec with Matchers {
   "A SetStateSpec" when {
     val matchField = new MatchField(4, 4, false)
     val controller = new Controller(matchField)
-    controller.initMatchfield()
+    controller.initMatchfield
     val state = SetState(controller)
     "created" should {
       "handle" in {

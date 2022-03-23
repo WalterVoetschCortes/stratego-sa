@@ -1,8 +1,9 @@
 package de.htwg.se.stratego.model
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{CharacterList, Figure, GameCharacter}
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatest.matchers.should.Matchers
 
-class CharacterListSpec extends WordSpec with Matchers {
+class CharacterListSpec extends AnyWordSpec with Matchers {
   "A CharacterList" when { "new with size 4" should {
     val characterlist = CharacterList(4)
     "have a list" in {

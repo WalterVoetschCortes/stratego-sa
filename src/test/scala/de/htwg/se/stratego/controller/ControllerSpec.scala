@@ -3,9 +3,10 @@ package de.htwg.se.stratego.controller
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{CharacterList, Figure, Game, GameCharacter, MatchField}
 import de.htwg.se.stratego.model.playerComponent.Player
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatest.matchers.should.Matchers
 
-class ControllerSpec extends WordSpec with Matchers {
+class ControllerSpec extends AnyWordSpec with Matchers {
   "A Controller" when {
     "created" should {
       val matchField = new MatchField(4, 4, false)
@@ -13,7 +14,7 @@ class ControllerSpec extends WordSpec with Matchers {
       val controller1 = new Controller(matchField)
       val controller2 = new Controller(matchField)
       val controller3 = new Controller(matchField)
-      controller3.initMatchfield()
+      controller3.initMatchfield
 
 
       val characterList = new CharacterList(4)
@@ -33,7 +34,7 @@ class ControllerSpec extends WordSpec with Matchers {
         controller.handle("player1 player2") should be ("")
       }
       "can welcome" in {
-        controller.welcome() should be (
+        controller.welcome should be (
           "Welcome to STRATEGO! " +
           "Please enter first name of Player1 and then of Player2 like (player1 player2)!")
       }
