@@ -144,7 +144,7 @@ case class Game(var playerA: Player, var playerB: Player, size: Int, var matchFi
     matchField.fields.field(row,col).character.get.figure.value == 11 then true else false
 
   object Context extends Game(playerA: Player, playerB: Player, size: Int, matchField: MatchFieldInterface) 
-    def attack(matchField: MatchFieldInterface, rowA: Int, colA: Int, rowD: Int, colD: Int, currentPlayerIndex: Int): MatchFieldInterface = {
+    def attack(matchField: MatchFieldInterface, rowA: Int, colA: Int, rowD: Int, colD: Int, currentPlayerIndex: Int): MatchFieldInterface = 
       def strategy1:MatchFieldInterface = matchField
       def strategy3:MatchFieldInterface = matchField.removeChar(rowD, colD).addChar(rowD, colD,
         matchField.fields.field(rowA,colA).character.get,matchField.fields.field(rowA,colA).colour.get).removeChar(rowA,colA)
@@ -172,5 +172,4 @@ case class Game(var playerA: Player, var playerB: Player, size: Int, var matchFi
       val attackIsStronger = if(figureHasValue(matchField, rowA,colA) > figureHasValue(matchField,rowD, colD)) return strategy3
       val attackEqualsDefence = if(figureHasValue(matchField, rowA,colA) == figureHasValue(matchField,rowD, colD)) return strategy8
       matchField
-    }
 

@@ -13,7 +13,7 @@ class StrategoModule extends AbstractModule:
   val defaultSize:Int = 10
   val defaultSet:Boolean = false
 
-  override def configure():Unit = {
+  override def configure():Unit = 
 
     bindConstant().annotatedWith(Names.named("DefaultSize")).to(defaultSize)
     bindConstant().annotatedWith(Names.named("DefaultSet")).to(defaultSet)
@@ -26,6 +26,5 @@ class StrategoModule extends AbstractModule:
 
     bind(classOf[FileIOInterface]).to(classOf[fileIoXmlImpl.FileIO])
 
-  }
 
 

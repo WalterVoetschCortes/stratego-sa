@@ -11,25 +11,23 @@ case class MatchField @Inject() (fields: Matrix[Field]) extends MatchFieldInterf
 
   def removeChar(row: Int, col: Int): MatchField = copy(fields.updateField(row, col, Field(false,None,None)))
 
-  def legend:String = {
+  def legend:String = 
     val welcome = "**********  STRATEGO  **********\n\n"
     val n = "n:   create a new empty machtfield\n"
     val z = "z:   undo\n"
     val y = "y:   redo\n"
     val q = "q:   quit the programm\n"
     welcome + n + z + y + q
-  }
 
-  def frame(row:Int): String = {
+  def frame(row:Int): String = 
     val plus = "+"
     val line = "-"
     val combine = (plus + line * 5) * row + plus
     combine
-  }
 
   def createNewMatchField: MatchFieldInterface = new MatchField(fields.matrixSize,fields.matrixSize,false)
 
-  override def toString:String = {
+  override def toString:String = 
     val col = fields.matrixSize
     val row = fields.matrixSize
     val n = fields.matrixSize - 1
@@ -41,19 +39,15 @@ case class MatchField @Inject() (fields: Matrix[Field]) extends MatchFieldInterf
     matchField += new_line + frame(fields.matrixSize) + new_line
     for { row <- 0 until row
           col <- 0 until col }
-    {
-      if (fields.field(row, col).isSet) {
+    do
+      if (fields.field(row, col).isSet) then
         matchField += "|  " + fields.field(row,col) + "  "
-      } else {
+      else 
         matchField += "|     "
-      }
-      if (col == n) {
+      if (col == n) 
         matchField += pipe + " " + row + new_line
         matchField += frame(fields.matrixSize) + new_line
-      }
-    }
     matchField += legend
     matchField
-  }
 
 

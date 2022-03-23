@@ -14,7 +14,7 @@ import scala.io.Source
 
 class FileIO extends FileIOInterface:
 
-  override def load: (MatchFieldInterface,Int,String) = {
+  override def load: (MatchFieldInterface,Int,String) = 
     var matchField: MatchFieldInterface = null
     val source:String = Source.fromFile("matchField.json").getLines().mkString
     val json: JsValue = Json.parse(source)
@@ -22,21 +22,18 @@ class FileIO extends FileIOInterface:
     matchField = injector.getInstance(classOf[MatchFieldInterface])
     val currentPlayerIndex = (json \ "currentPlayerIndex").get.toString().toInt
     val playerS = (json \ "players").get.toString()
-    for(index <- 0 until matchField.fields.matrixSize * matchField.fields.matrixSize){
+    for index <- 0 until matchField.fields.matrixSize * matchField.fields.matrixSize do
       val row = (json \\ "row")(index).as[Int]
       val col = (json \\ "col")(index).as[Int]
-      if(((json \ "matchField")(index) \\ "figName").nonEmpty) {
+      if((json \ "matchField")(index) \\ "figName").nonEmpty then
         val figName = ((json \ "matchField")(index) \ "figName").as[String]
         val figValue = ((json \ "matchField")(index) \ "figValue").as[Int]
         val colour = ((json \ "matchField")(index) \ "colour").as[Int]
         matchField = matchField.addChar(row, col, GameCharacter(Figure.FigureVal(figName, figValue)), Colour.FigureCol(colour))
-      }
-    }
     (matchField,currentPlayerIndex, playerS)
-  }
 
 
-  def matchFieldToJson(matchField: MatchFieldInterface, currentPlayerIndex: Int, players: String) = {
+  def matchFieldToJson(matchField: MatchFieldInterface, currentPlayerIndex: Int, players: String) = 
     Json.obj(
       "currentPlayerIndex" -> JsNumber(currentPlayerIndex),
       "players" -> players,
@@ -61,15 +58,14 @@ class FileIO extends FileIOInterface:
           }
         )
     )
-  }
 
-  override def save(matchField: MatchFieldInterface, currentPlayerIndex: Int, players: List[Player]): Unit = {
+  override def save(matchField: MatchFieldInterface, currentPlayerIndex: Int, players: List[Player]): Unit = 
     import java.io._
     val pw = new PrintWriter(new File("matchField.json"))
     val playerS = "" + players(0) + " "+ players(1)
     pw.write(Json.prettyPrint(matchFieldToJson(matchField, currentPlayerIndex, playerS)))
     pw.close()
-  }
+  
 
 
 

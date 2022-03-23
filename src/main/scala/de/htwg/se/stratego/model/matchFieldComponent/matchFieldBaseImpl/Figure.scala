@@ -1,9 +1,9 @@
 package de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl
 
 object Figure extends Enumeration :
-  sealed case class FigureVal(name: String, value: Int){
+  sealed case class FigureVal(name: String, value: Int):
     override def toString: String = name
-  }
+    
   val Bomb = FigureVal("B", 11)
   val Marshal = FigureVal("M", 10)
   val General = FigureVal("9",9)

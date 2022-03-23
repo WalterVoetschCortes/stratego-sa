@@ -15,6 +15,6 @@ import scala.io.StdIn.readLine
   val gui = new PlayerFrame(controller)
 
   var input = "";
-  while (!input.equals("q"))
+  while !input.equals("q") do
     input = readLine()
     println(tui.processInputLine(input))
