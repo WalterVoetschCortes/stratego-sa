@@ -29,23 +29,23 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
   private val undoManager = new UndoManager
   var state: ControllerState = EnterPlayer(this)
 
-  def handle(input: String):String = {
+  def handle(input: String):String =
     state.handle(input)
-  }
 
-  def welcome:String = {
+
+  def welcome:String =
     "Welcome to STRATEGO! " +
       "Please enter first name of Player1 and then of Player2 like (player1 player2)!"
-  }
 
-  def setPlayers(input: String): String = {
+
+  def setPlayers(input: String): String =
     playerList = game.setPlayers(input)
     nextState
     publish(new PlayerChanged)
     ""
-  }
 
-  def createEmptyMatchfield(size:Int): String = {
+
+  def createEmptyMatchfield(size:Int): String =
     matchField = new MatchField(size, size, false)
     game = game.copy(playerBlue,playerRed,size,matchField)
     gameStatus=NEW
@@ -53,25 +53,24 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
     publish(new NewGame)
     currentPlayerIndex=0
     "created new matchfield\nPlease enter the names like (player1 player2)"
-  }
 
-  def initMatchfield: String = {
+
+  def initMatchfield: String =
     var newMatchField = matchField
     newMatchField = game.init(matchField)
-    if (matchField.equals(newMatchField)) {
+    if matchField.equals(newMatchField) then
       ""
-    } else {
+    else
       matchField = game.init(matchField)
       gameStatus=INIT
       nextState
       publish(new MachtfieldInitialized)
       "" + playerList(currentPlayerIndex) + " it's your turn!"
-    }
-  }
 
-  def attack(rowA: Int, colA: Int, rowD:Int, colD:Int): String ={
-    if(game.onlyBombAndFlag(matchField,currentPlayerIndex) && matchField.fields.field(rowA,colA).isSet &&
-      matchField.fields.field(rowA,colA).colour.get.value==currentPlayerIndex) {
+
+  def attack(rowA: Int, colA: Int, rowD:Int, colD:Int): String =
+    if game.onlyBombAndFlag(matchField,currentPlayerIndex) && matchField.fields.field(rowA,colA).isSet &&
+      matchField.fields.field(rowA,colA).colour.get.value==currentPlayerIndex then
       currentPlayerIndex = nextPlayer
       publish(new GameFinished)
       currentPlayerIndex=1
@@ -79,60 +78,58 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
       createEmptyMatchfield(matchField.fields.matrixSize)
       return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +
         "Game finished! Play new Game with (n)!"
-    }
-    if(rowD <= matchField.fields.matrixSize - 1 && rowD >= 0 && colD >= 0 && colD <= matchField.fields.matrixSize - 1 &&
+
+    if rowD <= matchField.fields.matrixSize - 1 && rowD >= 0 && colD >= 0 && colD <= matchField.fields.matrixSize - 1 &&
       matchField.fields.field(rowA, colA).isSet.equals(true) && matchField.fields.field(rowD, colD).isSet.equals(true)
       && matchField.fields.field(rowD,colD).colour.get.value!= currentPlayerIndex &&
-      matchField.fields.field(rowD,colD).character.get.figure.value==0){
+      matchField.fields.field(rowD,colD).character.get.figure.value==0 then
       publish(new GameFinished)
       currentPlayerIndex=1
       nextState
       createEmptyMatchfield(matchField.fields.matrixSize)
       return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +
         "Game finished! Play new Game with (n)!"
-    }
-    if (rowD <= matchField.fields.matrixSize - 1 && rowD >= 0 && colD >= 0 && colD <= matchField.fields.matrixSize - 1 &&
+
+    if rowD <= matchField.fields.matrixSize - 1 && rowD >= 0 && colD >= 0 && colD <= matchField.fields.matrixSize - 1 &&
       matchField.fields.field(rowA,colA).isSet && matchField.fields.field(rowA,colA).colour.get.value==currentPlayerIndex
-      && matchField.fields.field(rowD,colD).isSet && matchField.fields.field(rowD,colD).colour.get.value!= currentPlayerIndex) {
+      && matchField.fields.field(rowD,colD).isSet && matchField.fields.field(rowD,colD).colour.get.value!= currentPlayerIndex) then
       matchField = game.Context.attack(matchField, rowA, colA, rowD, colD,currentPlayerIndex)
       gameStatus = ATTACK
       currentPlayerIndex= nextPlayer
       publish(new PlayerSwitch)
       publish(new FieldChanged)
-    }
-    ""
-  }
 
-  def set(row:Int, col:Int, charac:String): String = {
+    ""
+
+  def set(row:Int, col:Int, charac:String): String =
     currentPlayerIndex match {
       case 0 =>
         undoManager.doStep(new SetCommand(currentPlayerIndex, row, col, charac, this))
-        if(game.bList.size == 0){
+        if game.bList.size == 0 then
           currentPlayerIndex=nextPlayer
           publish(new PlayerSwitch)
-        }
+
       case 1 =>
         undoManager.doStep(new SetCommand(currentPlayerIndex, row, col, charac, this))
-        if(game.rList.size == 0){
+        if game.rList.size == 0 then
           currentPlayerIndex=nextPlayer
           nextState
           publish(new MachtfieldInitialized)
-        }
+
     }
     publish(new FieldChanged)
-    if(game.rList.size == 0){
+    if game.rList.size == 0 then
         return "Move Figures with (m direction[u,d,r,l] row col) or attack with (a row col row col)\n" +
         playerList(currentPlayerIndex) + " it's your turn!"
-    }
-    if(game.bList.size == 0){
-      return ""
-    }
-    ""
-  }
 
-  def move(dir: Char, row:Int, col:Int): String = {
-    if (matchField.fields.field(row,col).isSet && matchField.fields.field(row,col).colour.get.value==currentPlayerIndex) {
-      if(game.onlyBombAndFlag(matchField,currentPlayerIndex)) {
+    if game.bList.size == 0 then
+      return ""
+
+    ""
+
+  def move(dir: Char, row:Int, col:Int): String =
+    if matchField.fields.field(row,col).isSet && matchField.fields.field(row,col).colour.get.value==currentPlayerIndex then
+      if game.onlyBombAndFlag(matchField,currentPlayerIndex) then
         currentPlayerIndex = nextPlayer
         publish(new GameFinished)
         currentPlayerIndex=1
@@ -140,51 +137,50 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
         createEmptyMatchfield(matchField.fields.matrixSize)
         return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +
           "Game finished! Play new Game with (n)!"
-      }
+
       undoManager.doStep(new MoveCommand(dir, matchField, row, col, currentPlayerIndex, this))
-      if (!matchField.fields.field(row,col).isSet) {
+      if !matchField.fields.field(row,col).isSet then
         currentPlayerIndex = nextPlayer
         publish(new FieldChanged)
         publish(new PlayerSwitch)
-      }
-    }
+
     ""
-  }
+
 
   def matchFieldToString: String = matchField.toString
 
-  def undo: String = {
+  def undo: String =
     currentPlayerIndex= nextPlayer
     undoManager.undoStep
     gameStatus = UNDO
     publish(new FieldChanged)
     publish(new PlayerSwitch)
     "undo"
-  }
 
-  def redo: String = {
+
+  def redo: String =
     currentPlayerIndex=nextPlayer
     undoManager.redoStep
     gameStatus = REDO
     publish(new FieldChanged)
     publish(new PlayerSwitch)
     "redo"
-  }
 
-  def nextState: Unit = {
+
+  def nextState: Unit =
     state = state.nextState()
     publish(new FieldChanged)
-  }
+
 
   def statusString:String = GameStatus.getMessage(gameStatus)
 
-  def nextPlayer: Int = if (currentPlayerIndex == 0) 1 else 0
+  def nextPlayer: Int = if currentPlayerIndex == 0 then 1 else 0
 
   override def getSize: Int = matchField.fields.matrixSize
 
   override def getField: Matrix[Field] = matchField.fields
 
-  override def load: String = {
+  override def load: String =
     val (newmatchField, newPlayerIndex, newPlayers) = fileIO.load
     matchField = newmatchField
     currentPlayerIndex = newPlayerIndex
@@ -192,11 +188,11 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
     state = GameState(this)
     publish(new FieldChanged)
     "load"
-  }
 
-  override def save: String = {
+
+  override def save: String =
     fileIO.save(matchField, currentPlayerIndex, playerList)
     publish(new FieldChanged)
     "save"
-  }
+
 

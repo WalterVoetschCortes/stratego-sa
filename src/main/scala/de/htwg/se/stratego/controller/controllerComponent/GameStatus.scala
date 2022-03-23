@@ -15,7 +15,6 @@ object GameStatus extends Enumeration :
     ATTACK -> "enemy attacked"
   )
 
-  def getMessage(actualStatus: GameStatus) = {
+  def getMessage(actualStatus: GameStatus) =
     map(actualStatus)
-  }
 
