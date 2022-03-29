@@ -6,23 +6,21 @@ case class Game(var playerA: Player, var playerB: Player, size: Int, var matchFi
   var bList = playerA.characterList
   var rList = playerB.characterList
 
-  def init(currentMatchField: MatchFieldInterface): MatchFieldInterface = 
-    var bIdx = 0
-    var rIdx = 0
-    for  
-      row <- 0 until matchField.fields.matrixSize
-      col <- 0 until matchField.fields.matrixSize 
-    do
+  def init(bIdx: Int, rIdx: Int, row: Int, col: Int, currentMatchField: MatchFieldInterface): MatchFieldInterface = 
+    if(row < size)
       if currentMatchField.fields.field(row,col).isSet then
         return currentMatchField
-      if isBlueField(col) then
-        matchField = matchField.addChar(col, row, bList(bIdx),Colour.FigureCol(0))
-        bIdx+=1
-      else if isRedField(col) then
-        matchField = matchField.addChar(col, row, rList(rIdx),Colour.FigureCol(1))
-        rIdx+=1
-    matchField
-  
+      if isBlueField(row) then
+        matchField = matchField.addChar(row, col, bList(bIdx),Colour.FigureCol(0))
+        if col < matchField.fields.matrixSize - 1 then init(bIdx + 1, rIdx, row, col + 1, currentMatchField)
+        else init(bIdx + 1, rIdx, row + 1, 0, currentMatchField)
+      else if isRedField(row) then
+        matchField = matchField.addChar(row, col, rList(rIdx),Colour.FigureCol(1))
+        if col < matchField.fields.matrixSize - 1 then init(bIdx, rIdx + 1, row, col + 1, currentMatchField)
+        else init(bIdx, rIdx + 1, row + 1, 0, currentMatchField)
+      else init(bIdx, rIdx, row + 1, col, currentMatchField)
+    return matchField
+
   def characValue(charac:String): Int = 
     if charac.matches("[1-9]") then
       return charac.toInt

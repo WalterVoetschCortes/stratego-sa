@@ -14,7 +14,7 @@ class FileIoSpec extends AnyWordSpec with Matchers {
       val playerBlue = Player("PlayerBlue", characList.getCharacterList())
       val playerRed = Player("PlayerRed", characList.getCharacterList())
       val game = Game(playerBlue, playerRed, 4, matchField)
-      val board = game.init(matchField)
+      val board = game.init(0, 0, 0, 0, matchField)
       val board1 = game.moveDown(board,0,0)
       val controller = new Controller(board1)
 

@@ -57,11 +57,11 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
 
   def initMatchfield: String =
     var newMatchField = matchField
-    newMatchField = game.init(matchField)
+    newMatchField = game.init(0, 0, 0, 0, matchField)
     if matchField.equals(newMatchField) then
       ""
     else
-      matchField = game.init(matchField)
+      matchField = game.init(0, 0, 0, 0, matchField)
       gameStatus=INIT
       nextState
       publish(new MachtfieldInitialized)
