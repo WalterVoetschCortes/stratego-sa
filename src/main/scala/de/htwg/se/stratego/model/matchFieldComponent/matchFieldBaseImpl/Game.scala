@@ -75,22 +75,9 @@ case class Game(var playerA: Player, var playerB: Player, size: Int, var matchFi
   def isBlueChar(charac:String): Boolean = isChar(true)(charac)
 
   def onlyBombAndFlag(board: MatchFieldInterface, currentPlayerIndex: Int): Boolean = 
-    for 
-      row <- 0 until board.fields.matrixSize
-      col <- 0 until board.fields.matrixSize 
-    do
-      if board.fields.field(row,col).isSet && board.fields.field(row,col).colour.get.value==currentPlayerIndex then
-        if board.fields.field(row, col).character.get.figure.value == 1 ||
-          board.fields.field(row, col).character.get.figure.value == 2 ||
-          board.fields.field(row, col).character.get.figure.value == 3 ||
-          board.fields.field(row, col).character.get.figure.value == 4 ||
-          board.fields.field(row, col).character.get.figure.value == 5 ||
-          board.fields.field(row, col).character.get.figure.value == 6 ||
-          board.fields.field(row, col).character.get.figure.value == 7 ||
-          board.fields.field(row, col).character.get.figure.value == 8 ||
-          board.fields.field(row, col).character.get.figure.value == 9 ||
-          board.fields.field(row, col).character.get.figure.value == 10 then
-          return false
+    board.fields.rows.map((vec) => vec.map((field) => {
+      if field.isSet && field.colour.get.value==currentPlayerIndex then if field.character.get.figure.value >= 1 && field.character.get.figure.value <=10 then return false
+    }))
     true
 
   def setPlayers(input: String): List[Player] = 
