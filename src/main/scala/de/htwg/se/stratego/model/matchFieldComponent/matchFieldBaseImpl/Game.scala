@@ -29,36 +29,36 @@ case class Game(var playerA: Player, var playerB: Player, size: Int, var matchFi
       case "M" => 10
       case "F" => 0
     
-  def checkField(checkBlue:Boolean)(row:Int): Boolean = 
-    if(checkBlue)
+  def checkField(colour: Colour.FigureCol)(row:Int): Boolean = 
+    if(colour == Colour.BLUE)
       matchField.fields.matrixSize match 
-        case 4 | 5 => if(row > 0 && checkBlue) false else true
-        case 6 | 7 => if(row > 1 && checkBlue) false else true
-        case 8 | 9 => if(row > 2 && checkBlue) false else true
-        case 10    => if(row > 3 && checkBlue) false else true
+        case 4 | 5 => if(row > 0) false else true
+        case 6 | 7 => if(row > 1) false else true
+        case 8 | 9 => if(row > 2) false else true
+        case 10    => if(row > 3) false else true
       
     else 
       matchField.fields.matrixSize match 
-        case 4 => if(row < 3 && !checkBlue) false else true
-        case 5 | 6 => if(row < 4 && !checkBlue) false else true
-        case 7 | 8 => if(row < 5 && !checkBlue) false else true
-        case 9 | 10 => if(row < 6 && !checkBlue) false else true        
+        case 4 => if(row < 3) false else true
+        case 5 | 6 => if(row < 4) false else true
+        case 7 | 8 => if(row < 5) false else true
+        case 9 | 10 => if(row < 6) false else true        
   
-  def isBlueField(row:Int): Boolean = checkField(true)(row)
+  def isBlueField(row:Int): Boolean = checkField(Colour.BLUE)(row)
 
-  def isRedField(row:Int): Boolean = checkField(false)(row)
+  def isRedField(row:Int): Boolean = checkField(Colour.RED)(row)
 
-  def setField(setBlue: Boolean)(row:Int, col:Int, charac: String): MatchFieldInterface = 
+  def setField(colour: Colour.FigureCol)(row:Int, col:Int, charac: String): MatchFieldInterface = 
     if (isBlueChar(charac) && isBlueField(row) || isRedChar(charac) && isRedField(row)) && !matchField.fields.field(row,col).isSet then
-      val idx = if(setBlue) bList.indexOf(GameCharacter(Figure.FigureVal(charac,characValue(charac)))) else rList.indexOf(GameCharacter(Figure.FigureVal(charac,characValue(charac))))
-      matchField = if(setBlue) matchField.addChar(row,col,bList(idx),Colour.FigureCol(0)) else matchField.addChar(row,col,rList(idx),Colour.FigureCol(1))
-      if (setBlue) bList = bList.patch(idx, Nil, 1) else rList = rList.patch(idx, Nil, 1)
+      val idx = if(colour == Colour.BLUE) bList.indexOf(GameCharacter(Figure.FigureVal(charac,characValue(charac)))) else rList.indexOf(GameCharacter(Figure.FigureVal(charac,characValue(charac))))
+      matchField = if(colour == Colour.BLUE) matchField.addChar(row,col,bList(idx),Colour.FigureCol(0)) else matchField.addChar(row,col,rList(idx),Colour.FigureCol(1))
+      if (colour == Colour.BLUE) bList = bList.patch(idx, Nil, 1) else rList = rList.patch(idx, Nil, 1)
       return matchField
     matchField
 
-  def setBlue(row:Int, col:Int, charac: String): MatchFieldInterface = setField(true)(row, col, charac)
+  def setBlue(row:Int, col:Int, charac: String): MatchFieldInterface = setField(Colour.BLUE)(row, col, charac)
 
-  def setRed(row:Int, col:Int, charac: String): MatchFieldInterface = setField(false)(row, col, charac)
+  def setRed(row:Int, col:Int, charac: String): MatchFieldInterface = setField(Colour.RED)(row, col, charac)
 
   def set(player: Int, row:Int, col:Int, charac: String): MatchFieldInterface = 
     player match
@@ -66,17 +66,19 @@ case class Game(var playerA: Player, var playerB: Player, size: Int, var matchFi
       case 1 => return setRed(row, col, charac)
     matchField
 
-  def isChar(checkBlue: Boolean)(charac:String): Boolean = 
-    if(checkBlue) bList.map(GameCharacter => if(GameCharacter.figure.name.equals(charac)) return true else false) else rList.map(GameCharacter => if(GameCharacter.figure.name.equals(charac)) return true else false) 
+  def isChar(colour: Colour.FigureCol)(charac:String): Boolean = 
+    if(colour == Colour.BLUE) bList.map(GameCharacter => if(GameCharacter.figure.name.equals(charac)) return true else false) else rList.map(GameCharacter => if(GameCharacter.figure.name.equals(charac)) return true else false) 
     false
 
-  def isRedChar(charac:String): Boolean = isChar(false)(charac)
+  def isRedChar(charac:String): Boolean = isChar(Colour.RED)(charac)
 
-  def isBlueChar(charac:String): Boolean = isChar(true)(charac)
+  def isBlueChar(charac:String): Boolean = isChar(Colour.BLUE)(charac)
 
   def onlyBombAndFlag(board: MatchFieldInterface, currentPlayerIndex: Int): Boolean = 
     board.fields.rows.map((vec) => vec.map((field) => {
-      if field.isSet && field.colour.get.value==currentPlayerIndex then if field.character.get.figure.value >= 1 && field.character.get.figure.value <=10 then return false
+      if field.isSet && field.colour.get.value==currentPlayerIndex then 
+        if field.character.get.figure.value >= 1 && field.character.get.figure.value <=10 then 
+          return false
     }))
     true
 
