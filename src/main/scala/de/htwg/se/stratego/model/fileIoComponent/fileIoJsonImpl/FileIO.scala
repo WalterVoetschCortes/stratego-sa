@@ -17,24 +17,30 @@ class FileIO extends FileIOInterface:
 
   final val FILE_NAME: String = "matchField.json"
 
-  override def load: (MatchFieldInterface,Int,String) = 
-    var matchField: MatchFieldInterface = null
-    val source:String = Source.fromFile("matchField.json").getLines().mkString
-    val json: JsValue = Json.parse(source)
-    val injector = Guice.createInjector(new StrategoModule)
-    matchField = injector.getInstance(classOf[MatchFieldInterface])
-    val currentPlayerIndex = (json \ "currentPlayerIndex").get.toString().toInt
-    val playerS = (json \ "players").get.toString()
-    for index <- 0 until matchField.fields.matrixSize * matchField.fields.matrixSize do
-      val row = (json \\ "row")(index).as[Int]
-      val col = (json \\ "col")(index).as[Int]
-      if((json \ "matchField")(index) \\ "figName").nonEmpty then
-        val figName = ((json \ "matchField")(index) \ "figName").as[String]
-        val figValue = ((json \ "matchField")(index) \ "figValue").as[Int]
-        val colour = ((json \ "matchField")(index) \ "colour").as[Int]
-        matchField = matchField.addChar(row, col, GameCharacter(Figure.FigureVal(figName, figValue)), Colour.FigureCol(colour))
-    (matchField,currentPlayerIndex, playerS)
-
+  override def load: Try[Option[(MatchFieldInterface, Int, String)]] = 
+    var matchFieldOption: Option[(MatchFieldInterface, Int, String)] = None
+    Try{
+      val source:String = Source.fromFile("matchField.json").getLines().mkString
+      val json: JsValue = Json.parse(source)
+      val injector = Guice.createInjector(new StrategoModule)
+      matchFieldOption = Some((injector.getInstance(classOf[MatchFieldInterface]),  0 , ""))
+      matchFieldOption match
+        case Some((newmatchField, newPlayerIndex, newPlayers)) =>
+          var _newmatchField = newmatchField
+          val currentPlayerIndex = (json \ "currentPlayerIndex").get.toString().toInt
+          val playerS = (json \ "players").get.toString()
+          for index <- 0 until _newmatchField.fields.matrixSize * _newmatchField.fields.matrixSize do
+            val row = (json \\ "row")(index).as[Int]
+            val col = (json \\ "col")(index).as[Int]
+            if((json \ "matchField")(index) \\ "figName").nonEmpty then
+              val figName = ((json \ "matchField")(index) \ "figName").as[String]
+              val figValue = ((json \ "matchField")(index) \ "figValue").as[Int]
+              val colour = ((json \ "matchField")(index) \ "colour").as[Int]
+              _newmatchField = _newmatchField.addChar(row, col, GameCharacter(Figure.FigureVal(figName, figValue)), Colour.FigureCol(colour))
+          matchFieldOption = Some((_newmatchField, newPlayerIndex, newPlayers))
+        case None =>
+      matchFieldOption
+    }
 
   def matchFieldToJson(matchField: MatchFieldInterface, currentPlayerIndex: Int, players: String) = 
     Json.obj(

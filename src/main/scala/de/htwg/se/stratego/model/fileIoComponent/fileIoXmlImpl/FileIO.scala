@@ -11,24 +11,31 @@ import scala.util.{Try, Success, Failure}
 import scala.xml.PrettyPrinter
 
 class FileIO extends FileIOInterface:
-  override def load: (MatchFieldInterface,Int,String) = 
-    var matchField: MatchFieldInterface = null
-    val file = scala.xml.XML.loadFile("matchField.xml")
-    val currentPlayerIndex = (file \\ "matchField" \ "@currentPlayerIndex").text.toInt
-    val playerS = (file \\ "matchField" \ "@players").text
-    val injector = Guice.createInjector(new StrategoModule)
-    matchField = injector.getInstance(classOf[MatchFieldInterface])
+  override def load: Try[Option[(MatchFieldInterface, Int, String)]] = 
+    var matchFieldOption: Option[(MatchFieldInterface, Int, String)] = None
+    Try{
+      val file = scala.xml.XML.loadFile("matchField.xml")
+      val currentPlayerIndex = (file \\ "matchField" \ "@currentPlayerIndex").text.toInt
+      val playerS = (file \\ "matchField" \ "@players").text
+      val injector = Guice.createInjector(new StrategoModule)
+      matchFieldOption = Some((injector.getInstance(classOf[MatchFieldInterface]),  0 , ""))
+      val fieldNodes = (file \\ "field")
+      matchFieldOption match
+        case Some((newmatchField, newPlayerIndex, newPlayers)) => 
+          var _newmatchField = newmatchField
+          for field <- fieldNodes do
+            val row: Int = (field \ "@row").text.toInt
+            val col: Int = (field\ "@col").text.toInt
+            val figName: String = (field\ "@figName").text
+            val figValue: Int = (field\ "@figValue").text.toInt
+            val colour:Int = (field\ "@colour").text.toInt
+            _newmatchField = _newmatchField.addChar(row, col, new GameCharacter(Figure.FigureVal(figName,figValue)),
+              Colour.FigureCol(colour))
+          matchFieldOption = Some((_newmatchField, newPlayerIndex, newPlayers))
+        case None =>
+      matchFieldOption
+    }
 
-    val fieldNodes = (file \\ "field")
-    for field <- fieldNodes do
-      val row: Int = (field \ "@row").text.toInt
-      val col: Int = (field\ "@col").text.toInt
-      val figName: String = (field\ "@figName").text
-      val figValue: Int = (field\ "@figValue").text.toInt
-      val colour:Int = (field\ "@colour").text.toInt
-      matchField = matchField.addChar(row, col, new GameCharacter(Figure.FigureVal(figName,figValue)),
-        Colour.FigureCol(colour))
-    (matchField, currentPlayerIndex,playerS)
 
 
   def cellToXml(matchField: MatchFieldInterface, row: Int, col: Int) = 

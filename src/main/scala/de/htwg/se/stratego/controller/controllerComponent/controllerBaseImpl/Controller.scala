@@ -183,11 +183,22 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
   override def getField: Matrix[Field] = matchField.fields
 
   override def load: String =
-    val (newmatchField, newPlayerIndex, newPlayers) = fileIO.load
-    matchField = newmatchField
-    currentPlayerIndex = newPlayerIndex
-    playerList = game.setPlayers(newPlayers)
-    state = GameState(this)
+    val fileResult = fileIO.load
+    fileResult match 
+      case Success(option) => 
+        option.match 
+          case Some(_matchfield) =>
+            val (newmatchField, newPlayerIndex, newPlayers) = _matchfield
+            matchField = newmatchField
+            currentPlayerIndex = newPlayerIndex
+            playerList = game.setPlayers(newPlayers)
+            gameStatus = LOADED
+          case None =>
+            gameStatus = COULD_NOT_LOAD
+        
+      case Failure(e) =>
+        logger.error("Error occured while loading game from file: " + e.getMessage)
+        gameStatus = COULD_NOT_LOAD
     publish(new FieldChanged)
     "load"
 
