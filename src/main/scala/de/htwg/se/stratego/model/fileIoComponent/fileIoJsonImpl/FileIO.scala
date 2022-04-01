@@ -7,12 +7,15 @@ import de.htwg.se.stratego.model.matchFieldComponent.{FieldInterface, MatchField
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{Colour, Figure, GameCharacter}
 import de.htwg.se.stratego.model.playerComponent.Player
 import play.api.libs.json.{JsNumber, JsValue, Json, Writes}
+import scala.util.{Try, Success, Failure}
 
 import scala.io.Source
 
 
 
 class FileIO extends FileIOInterface:
+
+  final val FILE_NAME: String = "matchField.json"
 
   override def load: (MatchFieldInterface,Int,String) = 
     var matchField: MatchFieldInterface = null
@@ -59,12 +62,15 @@ class FileIO extends FileIOInterface:
         )
     )
 
-  override def save(matchField: MatchFieldInterface, currentPlayerIndex: Int, players: List[Player]): Unit = 
+  override def save(matchField: MatchFieldInterface, currentPlayerIndex: Int, players: List[Player]): Try[Unit] = 
     import java.io._
-    val pw = new PrintWriter(new File("matchField.json"))
-    val playerS = "" + players(0) + " "+ players(1)
-    pw.write(Json.prettyPrint(matchFieldToJson(matchField, currentPlayerIndex, playerS)))
-    pw.close()
+    Try {
+      val pw = new PrintWriter(new File("matchField.json"))
+      val playerS = "" + players(0) + " "+ players(1)
+      pw.write(Json.prettyPrint(matchFieldToJson(matchField, currentPlayerIndex, playerS)))
+      pw.close()      
+    }
+
   
 
 

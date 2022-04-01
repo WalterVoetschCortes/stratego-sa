@@ -12,8 +12,10 @@ import de.htwg.se.stratego.util.UndoManager
 
 import scala.swing.Publisher
 
+import scala.util.{Success, Failure}
+import com.typesafe.scalalogging.{LazyLogging, Logger}
 
-class Controller @Inject()(var matchField:MatchFieldInterface) extends ControllerInterface with Publisher :
+class Controller @Inject()(var matchField:MatchFieldInterface) extends ControllerInterface with Publisher with LazyLogging:
 
   val injector = Guice.createInjector(new StrategoModule)
   val fileIO = injector.getInstance(classOf[FileIOInterface])
@@ -191,7 +193,13 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
 
 
   override def save: String =
-    fileIO.save(matchField, currentPlayerIndex, playerList)
+    fileIO.save(matchField, currentPlayerIndex, playerList) match {
+      case Success(_) =>
+        gameStatus = SAVED
+      case Failure(e) => 
+        logger.error("Error occured while storing game to file: " + e.getMessage)
+        gameStatus = COULD_NOT_SAVE
+    }
     publish(new FieldChanged)
     "save"
 

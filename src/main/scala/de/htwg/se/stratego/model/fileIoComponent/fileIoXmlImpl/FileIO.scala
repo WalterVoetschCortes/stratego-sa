@@ -6,6 +6,7 @@ import de.htwg.se.stratego.model.fileIoComponent.FileIOInterface
 import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{Colour, Figure, GameCharacter}
 import de.htwg.se.stratego.model.playerComponent.Player
+import scala.util.{Try, Success, Failure}
 
 import scala.xml.PrettyPrinter
 
@@ -48,14 +49,16 @@ class FileIO extends FileIOInterface:
     </matchField>
 
 
-  def saveString(matchField: MatchFieldInterface, currentPlayerIndex:Int, players: List[Player]): Unit = 
+  def saveString(matchField: MatchFieldInterface, currentPlayerIndex:Int, players: List[Player]): Try[Unit] = 
     import java.io._
-    val pw = new PrintWriter(new File("matchField.xml"))
-    val prettyPrinter = new PrettyPrinter(120,4)
-    val playerS = "" + players(0) + " " + players(1)
-    val xml = prettyPrinter.format(matchFieldToXml(matchField, currentPlayerIndex, playerS))
-    pw.write(xml)
-    pw.close
-
-  override def save(matchField: MatchFieldInterface, currentPlayerIndex: Int, players: List[Player]): Unit = saveString(matchField,currentPlayerIndex,players)
+    Try{
+      val pw = new PrintWriter(new File("matchField.xml"))
+      val prettyPrinter = new PrettyPrinter(120,4)
+      val playerS = "" + players(0) + " " + players(1)
+      val xml = prettyPrinter.format(matchFieldToXml(matchField, currentPlayerIndex, playerS))
+      pw.write(xml)
+      pw.close      
+    }
+    
+  override def save(matchField: MatchFieldInterface, currentPlayerIndex: Int, players: List[Player]): Try[Unit] = saveString(matchField,currentPlayerIndex,players)
 
