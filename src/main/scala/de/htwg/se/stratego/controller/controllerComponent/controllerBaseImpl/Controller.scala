@@ -192,6 +192,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
             matchField = newmatchField
             currentPlayerIndex = newPlayerIndex
             playerList = game.setPlayers(newPlayers)
+            state = GameState(this)
             gameStatus = LOADED
           case None =>
             gameStatus = COULD_NOT_LOAD

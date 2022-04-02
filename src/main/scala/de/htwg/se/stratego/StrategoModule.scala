@@ -24,7 +24,7 @@ class StrategoModule extends AbstractModule:
     bind(classOf[MatchFieldInterface]).annotatedWith(Names.named("small")).toInstance(new MatchField(6, 6, defaultSet))
     bind(classOf[MatchFieldInterface]).annotatedWith(Names.named("normal")).toInstance(new MatchField(10, 10, defaultSet))
 
-    bind(classOf[FileIOInterface]).to(classOf[fileIoXmlImpl.FileIO])
+    bind(classOf[FileIOInterface]).to(classOf[fileIoJsonImpl.FileIO])
 
 
 

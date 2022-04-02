@@ -23,7 +23,7 @@ class FileIO extends FileIOInterface:
       val source:String = Source.fromFile("matchField.json").getLines().mkString
       val json: JsValue = Json.parse(source)
       val injector = Guice.createInjector(new StrategoModule)
-      matchFieldOption = Some((injector.getInstance(classOf[MatchFieldInterface]),  0 , ""))
+      matchFieldOption = Some((injector.getInstance(classOf[MatchFieldInterface]),  0 , "a b"))
       matchFieldOption match
         case Some((newmatchField, newPlayerIndex, newPlayers)) =>
           var _newmatchField = newmatchField
@@ -37,7 +37,7 @@ class FileIO extends FileIOInterface:
               val figValue = ((json \ "matchField")(index) \ "figValue").as[Int]
               val colour = ((json \ "matchField")(index) \ "colour").as[Int]
               _newmatchField = _newmatchField.addChar(row, col, GameCharacter(Figure.FigureVal(figName, figValue)), Colour.FigureCol(colour))
-          matchFieldOption = Some((_newmatchField, newPlayerIndex, newPlayers))
+          matchFieldOption = Some((_newmatchField, currentPlayerIndex, playerS))
         case None =>
       matchFieldOption
     }

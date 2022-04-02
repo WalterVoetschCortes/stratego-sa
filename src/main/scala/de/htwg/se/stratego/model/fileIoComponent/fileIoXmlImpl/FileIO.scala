@@ -18,7 +18,7 @@ class FileIO extends FileIOInterface:
       val currentPlayerIndex = (file \\ "matchField" \ "@currentPlayerIndex").text.toInt
       val playerS = (file \\ "matchField" \ "@players").text
       val injector = Guice.createInjector(new StrategoModule)
-      matchFieldOption = Some((injector.getInstance(classOf[MatchFieldInterface]),  0 , ""))
+      matchFieldOption = Some((injector.getInstance(classOf[MatchFieldInterface]),  0 , "a b"))
       val fieldNodes = (file \\ "field")
       matchFieldOption match
         case Some((newmatchField, newPlayerIndex, newPlayers)) => 
@@ -31,7 +31,7 @@ class FileIO extends FileIOInterface:
             val colour:Int = (field\ "@colour").text.toInt
             _newmatchField = _newmatchField.addChar(row, col, new GameCharacter(Figure.FigureVal(figName,figValue)),
               Colour.FigureCol(colour))
-          matchFieldOption = Some((_newmatchField, newPlayerIndex, newPlayers))
+          matchFieldOption = Some((_newmatchField, currentPlayerIndex, playerS))
         case None =>
       matchFieldOption
     }
@@ -40,9 +40,7 @@ class FileIO extends FileIOInterface:
 
   def cellToXml(matchField: MatchFieldInterface, row: Int, col: Int) = 
     if(matchField.fields.field(row,col).isSet) then
-      <field row={row.toString} col={col.toString} figName={matchField.fields.field(row,col).character.get.figure.name}
-             figValue={matchField.fields.field(row,col).character.get.figure.value.toString}
-             colour={matchField.fields.field(row,col).colour.get.value.toString}>
+      <field row={row.toString} col={col.toString} figName={matchField.fields.field(row,col).character.get.figure.name} figValue={matchField.fields.field(row,col).character.get.figure.value.toString} colour={matchField.fields.field(row,col).colour.get.value.toString}>
       </field>
 
   def matchFieldToXml(matchField: MatchFieldInterface, currentPlayerIndex: Int, playerS: String) =
