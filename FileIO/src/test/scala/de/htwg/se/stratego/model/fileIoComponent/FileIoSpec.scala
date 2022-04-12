@@ -1,6 +1,5 @@
 package de.htwg.se.stratego.model.fileIoComponent
 
-import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{CharacterList, Game, MatchField}
 import de.htwg.se.stratego.model.playerComponent.Player
 import org.scalatest.wordspec.AnyWordSpec
@@ -16,7 +15,6 @@ class FileIoSpec extends AnyWordSpec with Matchers {
       val game = Game(playerBlue, playerRed, 4, matchField)
       val board = game.init(0, 0, 0, 0, matchField)
       val board1 = game.moveDown(board,0,0)
-      val controller = new Controller(board1)
 
       /*
       "save and load the Gamestate with Json" in {
