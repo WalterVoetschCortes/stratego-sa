@@ -1,10 +1,9 @@
 package de.htwg.se.stratego.model.fileIoComponent.fileIoXmlImpl
 
 import com.google.inject.Guice
-import de.htwg.se.stratego.StrategoModule
 import de.htwg.se.stratego.model.fileIoComponent.FileIOInterface
 import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
-import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{Colour, Figure, GameCharacter}
+import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{Colour, Figure, GameCharacter, MatchField}
 import de.htwg.se.stratego.model.playerComponent.Player
 import scala.util.{Try, Success, Failure}
 
@@ -12,13 +11,13 @@ import scala.xml.PrettyPrinter
 
 class FileIO extends FileIOInterface:
   override def load: Try[Option[(MatchFieldInterface, Int, String)]] = 
+    val emptyMatchfield = new MatchField(4, 4, false)
     var matchFieldOption: Option[(MatchFieldInterface, Int, String)] = None
     Try{
       val file = scala.xml.XML.loadFile("matchField.xml")
       val currentPlayerIndex = (file \\ "matchField" \ "@currentPlayerIndex").text.toInt
       val playerS = (file \\ "matchField" \ "@players").text
-      val injector = Guice.createInjector(new StrategoModule)
-      matchFieldOption = Some((injector.getInstance(classOf[MatchFieldInterface]),  0 , "a b"))
+      matchFieldOption = Some(((emptyMatchfield),  0 , "a b"))
       val fieldNodes = (file \\ "field")
       matchFieldOption match
         case Some((newmatchField, newPlayerIndex, newPlayers)) => 

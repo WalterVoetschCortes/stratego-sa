@@ -1,8 +1,4 @@
-lazy val root = (project in file(".")).aggregate(fileio).dependsOn(matchfield, fileio)
-lazy val matchfield = project in file("MatchField")
-lazy val fileio = (project in file("FileIO")).dependsOn(matchfield)
-
-name := "Stratego"
+name := "FileIO"
 organization  := "de.htwg.se.stratego"
 version       := "0.2.0"
 ThisBuild / scalaVersion := "3.1.1"
@@ -19,5 +15,3 @@ libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "2.0.1"
 libraryDependencies += "com.typesafe.play" %% "play-json" % "2.10.0-RC6"
 
 libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.9.4"
-
-coverageExcludedPackages := ".*gui.*;.*Stratego.*"

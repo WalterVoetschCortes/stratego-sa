@@ -1,10 +1,9 @@
 package de.htwg.se.stratego.model.fileIoComponent.fileIoJsonImpl
 
 import com.google.inject.Guice
-import de.htwg.se.stratego.StrategoModule
 import de.htwg.se.stratego.model.fileIoComponent.FileIOInterface
 import de.htwg.se.stratego.model.matchFieldComponent.{FieldInterface, MatchFieldInterface}
-import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{Colour, Figure, GameCharacter}
+import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{Colour, Figure, GameCharacter, Matrix, Field, MatchField}
 import de.htwg.se.stratego.model.playerComponent.Player
 import play.api.libs.json.{JsNumber, JsValue, Json, Writes}
 import scala.util.{Try, Success, Failure}
@@ -18,12 +17,12 @@ class FileIO extends FileIOInterface:
   final val FILE_NAME: String = "matchField.json"
 
   override def load: Try[Option[(MatchFieldInterface, Int, String)]] = 
+    val emptyMatchfield = new MatchField(4, 4, false)
     var matchFieldOption: Option[(MatchFieldInterface, Int, String)] = None
     Try{
       val source:String = Source.fromFile("matchField.json").getLines().mkString
       val json: JsValue = Json.parse(source)
-      val injector = Guice.createInjector(new StrategoModule)
-      matchFieldOption = Some((injector.getInstance(classOf[MatchFieldInterface]),  0 , "a b"))
+      matchFieldOption = Some((emptyMatchfield,  0 , "a b"))
       matchFieldOption match
         case Some((newmatchField, newPlayerIndex, newPlayers)) =>
           var _newmatchField = newmatchField
