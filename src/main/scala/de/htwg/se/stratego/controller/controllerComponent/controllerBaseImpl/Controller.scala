@@ -9,13 +9,36 @@ import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{CharacterList, Field, Game, MatchField, Matrix}
 import de.htwg.se.stratego.model.playerComponent.Player
 import de.htwg.se.stratego.util.UndoManager
+import de.htwg.se.stratego.controller.controllerComponent.RootService.system
+
+import akka.actor.typed.ActorSystem
+import akka.actor.typed.javadsl.Behaviors
+import akka.http.scaladsl.Http
+import akka.http.scaladsl.model.{HttpMethods, HttpRequest, HttpResponse}
+import akka.http.scaladsl.unmarshalling.Unmarshal
 
 import scala.swing.Publisher
 
 import scala.util.{Success, Failure}
 import com.typesafe.scalalogging.{LazyLogging, Logger}
+import play.api.libs.json.Json
+import play.api.libs.json.JsValue
+import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.GameCharacter
+import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.Figure
+import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.Colour
+import play.api.libs.json.JsNumber
+import play.api.libs.json.JsObject
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext
+import scala.concurrent.ExecutionContextExecutor
 
 class Controller @Inject()(var matchField:MatchFieldInterface) extends ControllerInterface with Publisher with LazyLogging:
+
+
+  implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "SingleRequest")  
+  implicit val executionContext: ExecutionContextExecutor = system.executionContext
+
+  val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = "http://localhost:8080/json"))
 
   val injector = Guice.createInjector(new StrategoModule)
   val fileIO = injector.getInstance(classOf[FileIOInterface])
@@ -182,37 +205,80 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
 
   override def getField: Matrix[Field] = matchField.fields
 
-  override def load: String =
-    val fileResult = fileIO.load
-    fileResult match 
-      case Success(option) => 
-        option.match 
-          case Some(_matchfield) =>
-            val (newmatchField, newPlayerIndex, newPlayers) = _matchfield
-            matchField = newmatchField
-            currentPlayerIndex = newPlayerIndex
-            playerList = game.setPlayers(newPlayers)
-            state = GameState(this)
-            gameStatus = LOADED
-          case None =>
-            gameStatus = COULD_NOT_LOAD
-        
-      case Failure(e) =>
-        logger.error("Error occured while loading game from file: " + e.getMessage)
-        gameStatus = COULD_NOT_LOAD
-    publish(new FieldChanged)
-    "load"
-
-
-  override def save: String =
-    fileIO.save(matchField, currentPlayerIndex, playerList) match {
-      case Success(_) =>
-        gameStatus = SAVED
-      case Failure(e) => 
-        logger.error("Error occured while storing game to file: " + e.getMessage)
-        gameStatus = COULD_NOT_SAVE
+  override def load: String = {
+    responseFuture.onComplete {
+      case Failure(_) => sys.error("HttpResponse failure")
+      case Success(res) => {
+        Unmarshal(res.entity).to[String].onComplete {
+          case Failure(_) => sys.error("Marshal failure")
+          case Success(result) => {
+            unpackJson(result)
+          }
+        }
+      }
     }
+    "load"
+  }
+
+  def unpackJson(result: String): Unit = {
+    val json: JsValue = Json.parse(result)
+    val injector = Guice.createInjector(new StrategoModule)
+    var newMatchField = injector.getInstance(classOf[MatchFieldInterface])
+    val newPlayerIndex = (json \ "currentPlayerIndex").get.toString().toInt
+    val playerS = (json \ "players").get.toString()
+    for(index <- 0 until matchField.fields.matrixSize * matchField.fields.matrixSize){
+      val row = (json \\ "row")(index).as[Int]
+      val col = (json \\ "col")(index).as[Int]
+      if(((json \ "matchField")(index) \\ "figName").nonEmpty) {
+        val figName = ((json \ "matchField")(index) \ "figName").as[String]
+        val figValue = ((json \ "matchField")(index) \ "figValue").as[Int]
+        val colour = ((json \ "matchField")(index) \ "colour").as[Int]
+        newMatchField = newMatchField.addChar(row, col, GameCharacter(Figure.FigureVal(figName, figValue)), Colour.FigureCol(colour))
+      }
+    }
+    game = game.copy(matchField = newMatchField)
+    currentPlayerIndex = newPlayerIndex
+
+    state = GameState(this)
+    gameStatus=LOADED
     publish(new FieldChanged)
+  }
+
+  def matchFieldToJson(matchField: MatchFieldInterface, currentPlayerIndex: Int, players: String): JsObject = {
+    Json.obj(
+      "currentPlayerIndex" -> JsNumber(currentPlayerIndex),
+      "players" -> players,
+      "matchField"-> Json.toJson(
+        for{
+          row <- 0 until matchField.fields.matrixSize
+          col <- 0 until matchField.fields.matrixSize
+        } yield {
+          var obj = Json.obj(
+            "row" -> row,
+            "col" -> col
+          )
+          if(matchField.fields.field(row,col).isSet) {
+            obj = obj.++(Json.obj(
+              "figName" -> matchField.fields.field(row, col).character.get.figure.name,
+              "figValue" -> matchField.fields.field(row, col).character.get.figure.value,
+              "colour" -> matchField.fields.field(row, col).colour.get.value
+            )
+            )
+          }
+          obj
+        }
+      )
+    )
+  }
+
+  override def save: String = {
+    val players = playerList
+    publish(new FieldChanged)
+    gameStatus=SAVED
+    val playerS = "" + players(0) + " " + players(1)
+    val gamestate: String = Json.prettyPrint(matchFieldToJson(game.matchField, currentPlayerIndex, playerS))
+    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(method = HttpMethods.POST, uri = "http://localhost:8080/json", entity = gamestate))
     "save"
+  }
 
 

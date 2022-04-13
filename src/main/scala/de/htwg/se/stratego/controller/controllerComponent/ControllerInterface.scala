@@ -5,6 +5,7 @@ import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{Field, 
 import de.htwg.se.stratego.model.playerComponent.Player
 
 import scala.swing.Publisher
+import scala.concurrent.ExecutionContext
 
 trait ControllerInterface extends Publisher :
   def handle(input:String):String

@@ -9,73 +9,30 @@ import play.api.libs.json.{JsNumber, JsValue, Json, Writes}
 import scala.util.{Try, Success, Failure}
 
 import scala.io.Source
+import javax.swing.JOptionPane
 
 
 
 class FileIO extends FileIOInterface:
+  def load: String = 
+    fileNotFound("matchField.json") match 
+      case Success(v) => println("File Found")
+      case Failure(v) => JOptionPane.showMessageDialog(null, "Es ist kein Spielstand vorhanden!")
+    
+    val file = Source.fromFile("matchField.json")
+    try file.mkString finally file.close()
+  
 
-  final val FILE_NAME: String = "matchField.json"
+  def fileNotFound(filename: String): Try[String] = 
+    Try(Source.fromFile(filename).getLines().mkString)
+  
 
-  override def load: Try[Option[(MatchFieldInterface, Int, String)]] = 
-    val emptyMatchfield = new MatchField(4, 4, false)
-    var matchFieldOption: Option[(MatchFieldInterface, Int, String)] = None
-    Try{
-      val source:String = Source.fromFile("matchField.json").getLines().mkString
-      val json: JsValue = Json.parse(source)
-      matchFieldOption = Some((emptyMatchfield,  0 , "a b"))
-      matchFieldOption match
-        case Some((newmatchField, newPlayerIndex, newPlayers)) =>
-          var _newmatchField = newmatchField
-          val currentPlayerIndex = (json \ "currentPlayerIndex").get.toString().toInt
-          val playerS = (json \ "players").get.toString()
-          for index <- 0 until _newmatchField.fields.matrixSize * _newmatchField.fields.matrixSize do
-            val row = (json \\ "row")(index).as[Int]
-            val col = (json \\ "col")(index).as[Int]
-            if((json \ "matchField")(index) \\ "figName").nonEmpty then
-              val figName = ((json \ "matchField")(index) \ "figName").as[String]
-              val figValue = ((json \ "matchField")(index) \ "figValue").as[Int]
-              val colour = ((json \ "matchField")(index) \ "colour").as[Int]
-              _newmatchField = _newmatchField.addChar(row, col, GameCharacter(Figure.FigureVal(figName, figValue)), Colour.FigureCol(colour))
-          matchFieldOption = Some((_newmatchField, currentPlayerIndex, playerS))
-        case None =>
-      matchFieldOption
-    }
-
-  def matchFieldToJson(matchField: MatchFieldInterface, currentPlayerIndex: Int, players: String) = 
-    Json.obj(
-      "currentPlayerIndex" -> JsNumber(currentPlayerIndex),
-      "players" -> players,
-      "matchField"-> Json.toJson(
-          for{
-            row <- 0 until matchField.fields.matrixSize
-            col <- 0 until matchField.fields.matrixSize
-          } yield {
-              var obj = Json.obj(
-                "row" -> row,
-                "col" -> col
-              )
-              if(matchField.fields.field(row,col).isSet) {
-                  obj = obj.++(Json.obj(
-                  "figName" -> matchField.fields.field(row, col).character.get.figure.name,
-                  "figValue" -> matchField.fields.field(row, col).character.get.figure.value,
-                  "colour" -> matchField.fields.field(row, col).colour.get.value
-                  )
-                  )
-                }
-            obj
-          }
-        )
-    )
-
-  override def save(matchField: MatchFieldInterface, currentPlayerIndex: Int, players: List[Player]): Try[Unit] = 
+  def save(gamestate_json: String): Unit = 
     import java.io._
-    Try {
-      val pw = new PrintWriter(new File("matchField.json"))
-      val playerS = "" + players(0) + " "+ players(1)
-      pw.write(Json.prettyPrint(matchFieldToJson(matchField, currentPlayerIndex, playerS)))
-      pw.close()      
-    }
-
+    val print_writer = new PrintWriter(new File("matchField.json"))
+    print_writer.write(gamestate_json)
+    print_writer.close()
+  
   
 
 
