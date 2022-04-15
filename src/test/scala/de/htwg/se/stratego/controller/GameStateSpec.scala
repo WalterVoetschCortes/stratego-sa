@@ -1,3 +1,4 @@
+/*
 package de.htwg.se.stratego.controller
 
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.{Controller, GameState}
@@ -25,3 +26,4 @@ class GameStateSpec extends AnyWordSpec with Matchers {
 
   }
 }
+ */

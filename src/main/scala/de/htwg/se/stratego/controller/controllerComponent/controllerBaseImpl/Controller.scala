@@ -226,18 +226,18 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
     var newMatchField = injector.getInstance(classOf[MatchFieldInterface])
     val newPlayerIndex = (json \ "currentPlayerIndex").get.toString().toInt
     val playerS = (json \ "players").get.toString()
-    for(index <- 0 until matchField.fields.matrixSize * matchField.fields.matrixSize){
+    for index <- 0 until newMatchField.fields.matrixSize * newMatchField.fields.matrixSize do
       val row = (json \\ "row")(index).as[Int]
       val col = (json \\ "col")(index).as[Int]
-      if(((json \ "matchField")(index) \\ "figName").nonEmpty) {
+      if((json \ "matchField")(index) \\ "figName").nonEmpty then
         val figName = ((json \ "matchField")(index) \ "figName").as[String]
         val figValue = ((json \ "matchField")(index) \ "figValue").as[Int]
         val colour = ((json \ "matchField")(index) \ "colour").as[Int]
         newMatchField = newMatchField.addChar(row, col, GameCharacter(Figure.FigureVal(figName, figValue)), Colour.FigureCol(colour))
-      }
-    }
-    game = game.copy(matchField = newMatchField)
+        
+    matchField = newMatchField
     currentPlayerIndex = newPlayerIndex
+    playerList = game.setPlayers(playerS)
 
     state = GameState(this)
     gameStatus=LOADED
@@ -277,7 +277,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
     gameStatus=SAVED
     val playerS = "" + players(0) + " " + players(1)
     val gamestate: String = Json.prettyPrint(matchFieldToJson(game.matchField, currentPlayerIndex, playerS))
-    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(method = HttpMethods.POST, uri = "http://localhost:8080/json", entity = gamestate))
+    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(method = HttpMethods.POST, uri = "http://localhost:8080/save", entity = gamestate))
     "save"
   }
 

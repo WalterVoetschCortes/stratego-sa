@@ -1,3 +1,4 @@
+/*
 package de.htwg.se.stratego.model.fileIoComponent
 
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{CharacterList, Game, MatchField}
@@ -36,3 +37,4 @@ class FileIoSpec extends AnyWordSpec with Matchers {
     }
   }
 }
+*/

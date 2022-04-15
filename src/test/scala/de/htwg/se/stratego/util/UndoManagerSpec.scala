@@ -1,3 +1,4 @@
+/*
 package de.htwg.se.stratego.util
 
 import org.scalatest.matchers.should.Matchers
@@ -36,3 +37,4 @@ class UndoManagerSpec extends AnyWordSpec with Matchers {
     }
   }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package de.htwg.se.stratego.controller
 
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.{Controller, SetCommand}
@@ -23,3 +24,4 @@ class SetCommandSpec extends AnyWordSpec with Matchers {
     }
   }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package de.htwg.se.stratego.controller
 
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.{Controller, SetState}
@@ -22,3 +23,4 @@ class SetStateSpec extends AnyWordSpec with Matchers {
     }
   }
 }
+*/

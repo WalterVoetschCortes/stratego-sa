@@ -1,3 +1,4 @@
+/*
 package de.htwg.se.stratego.util
 
 import de.htwg.se.stratego.util.{Command, UndoManager}
@@ -47,3 +48,4 @@ class CommandSpec extends AnyWordSpec with Matchers {
     }
   }
 }
+*/

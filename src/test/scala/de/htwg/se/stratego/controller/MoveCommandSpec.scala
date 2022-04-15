@@ -1,3 +1,4 @@
+/*
 package de.htwg.se.stratego.controller
 
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.{Controller, MoveCommand}
@@ -35,3 +36,4 @@ class MoveCommandSpec extends AnyWordSpec with Matchers {
     }
   }
 }
+ */
