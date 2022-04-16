@@ -10,6 +10,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/FileIO" />
             <option value="$PROJECT_DIR$/MatchField" />
+            <option value="$PROJECT_DIR$/Tui" />
             <option value="$PROJECT_DIR$/project" />
           </set>
         </option>

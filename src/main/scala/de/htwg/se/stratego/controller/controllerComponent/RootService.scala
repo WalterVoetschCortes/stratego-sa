@@ -23,6 +23,12 @@ object RootService extends Reactor {
   def server(): Future[Http.ServerBinding] = {
     val route =
       concat(
+        path("controller" / "createNewMatchfield") {
+          get {
+            controller.createEmptyMatchfield(controller.getSize)
+            complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, GameStatus.getMessage(controller.gameStatus)))
+          }
+        },
         get {
           path("controller" / "load") {
             controller.load
@@ -35,12 +41,58 @@ object RootService extends Reactor {
             complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, GameStatus.getMessage(controller.gameStatus)))
           }
         },
+        get {
+          path("controller" / "redo") {
+            controller.redo
+            complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, GameStatus.getMessage(controller.gameStatus)))
+          }
+        },
+        path("controller" / "handle") {
+          entity(as[String]) {
+            input =>
+              post {
+                controller.handle(input)
+                complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, GameStatus.getMessage(controller.gameStatus)))
+              }
+          }
+        },
       )
     Http().newServerAt("localhost", port).bind(route)
   }
-  
+
+  reactions += {
+    case event: NewGame => postEvent("createNewMatchfield", controller.matchFieldToString + "\nCreated new matchfield\nPlease enter the names like (player1 player2)\n")
+    case event: FieldChanged => postEvent("fieldChanged", controller.matchFieldToString)
+    case event: PlayerChanged => postEvent("playerChanged", "Hello " + controller.playerList(0) + " and " + controller.playerList(1) + "!\n")
+    case event: MachtfieldInitialized => postEvent("machtfieldInitializied", "Matchfield initialized\n")
+    case event: GameFinished => postEvent("gameFinished", "Game finished! " + controller.playerList(controller.currentPlayerIndex) + " has won the game!\n")
+    case event: PlayerSwitch => postEvent("playerSwitched", controller.playerList(controller.currentPlayerIndex).toString + " it's youre turn!\n")
+  }
+
   def stop(server: Future[Http.ServerBinding]): Unit = {
     server
       .flatMap(_.unbind()).onComplete(_ => println(port + " released"))
+  }
+
+  def postEvent(event: String, output: String): Unit = {
+    println(event)
+    Http().singleRequest(
+      HttpRequest(
+        method = HttpMethods.POST,
+        uri = "http://localhost:7090/tui/events/" + event,
+        entity = HttpEntity(ContentTypes.`text/html(UTF-8)`, output)
+      )
+    )
+  }
+
+  def sendGETEvent(event: String): Unit = {
+    println(event)
+    println(event)
+    Http().singleRequest(
+      HttpRequest(
+        method = HttpMethods.GET,
+        uri = "http://localhost:7090/tui/events" + event
+      )
+    )
   }
 }

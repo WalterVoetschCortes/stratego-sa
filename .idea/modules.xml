@@ -6,6 +6,8 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/MatchField.iml" filepath="$PROJECT_DIR$/.idea/modules/MatchField.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Stratego.iml" filepath="$PROJECT_DIR$/.idea/modules/Stratego.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Stratego-build.iml" filepath="$PROJECT_DIR$/.idea/modules/Stratego-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Tui.iml" filepath="$PROJECT_DIR$/Tui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/stratego-sa.Tui.iml" filepath="$PROJECT_DIR$/.idea/modules/stratego-sa.Tui.iml" />
     </modules>
   </component>
 </project>
