@@ -18,9 +18,8 @@ object Tui {
 
     var input: String = ""
 
-    while (input != "q")
-    do
-      input = readLine()
+    while (!input.equals("q"))
+      input = readLine
       tui.processInputLine(input)
 
     restController.stop(server)
