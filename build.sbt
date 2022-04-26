@@ -6,7 +6,7 @@ lazy val tui = (project in file("Tui"))
 name := "Stratego"
 organization  := "de.htwg.se.stratego"
 version       := "0.2.0"
-scalaVersion := "3.0.0"
+scalaVersion := "3.1.2"
 
 libraryDependencies += "org.scala-lang.modules" %% "scala-swing" % "3.0.0"
 

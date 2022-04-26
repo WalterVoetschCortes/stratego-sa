@@ -1,7 +1,7 @@
 name := "FileIO"
 organization  := "de.htwg.se.stratego"
 version       := "0.2.0"
-scalaVersion := "3.0.0"
+scalaVersion := "3.1.2"
 
 crossScalaVersions ++= Seq("2.13.6", "3.1.1")
 

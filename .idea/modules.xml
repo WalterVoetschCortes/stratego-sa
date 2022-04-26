@@ -7,7 +7,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Stratego.iml" filepath="$PROJECT_DIR$/.idea/modules/Stratego.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Stratego-build.iml" filepath="$PROJECT_DIR$/.idea/modules/Stratego-build.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Stratego.Tui.iml" filepath="$PROJECT_DIR$/.idea/modules/Stratego.Tui.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Tui.iml" filepath="$PROJECT_DIR$/Tui.iml" />
     </modules>
   </component>
 </project>

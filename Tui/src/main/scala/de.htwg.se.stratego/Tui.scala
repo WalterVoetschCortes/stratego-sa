@@ -1,8 +1,8 @@
 package de.htwg.se.stratego
 
 import de.htwg.se.stratego.aview.Tui
-import de.htwg.se.stratego.controller.{ControllerInterface, TuiService}
 import de.htwg.se.stratego.controller.restController.RestController
+import de.htwg.se.stratego.controller.{ControllerInterface, TuiService}
 
 import scala.io.StdIn.readLine
 
