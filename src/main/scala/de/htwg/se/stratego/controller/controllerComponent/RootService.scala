@@ -18,7 +18,11 @@ object RootService extends Reactor {
   implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "my-system")
   implicit val executionContext: ExecutionContextExecutor = system.executionContext
 
-  val port = 7070
+  val rootPort = 8080
+  val rootUri = "root-service"
+
+  val tuiPort = 8082
+  val tuiUri = "tui-service"
 
   def server(): Future[Http.ServerBinding] = {
     val route =
@@ -57,7 +61,7 @@ object RootService extends Reactor {
           }
         },
       )
-    Http().newServerAt("localhost", port).bind(route)
+    Http().newServerAt(rootUri, rootPort).bind(route)
   }
 
   reactions += {
@@ -71,7 +75,7 @@ object RootService extends Reactor {
 
   def stop(server: Future[Http.ServerBinding]): Unit = {
     server
-      .flatMap(_.unbind()).onComplete(_ => println(port + " released"))
+      .flatMap(_.unbind()).onComplete(_ => println(rootPort + " released"))
   }
 
   def postEvent(event: String, output: String): Unit = {
@@ -79,19 +83,8 @@ object RootService extends Reactor {
     Http().singleRequest(
       HttpRequest(
         method = HttpMethods.POST,
-        uri = "http://localhost:7090/tui/events/" + event,
+        uri =  s"http://${tuiUri}:${tuiPort}/tui/events/" + event,
         entity = HttpEntity(ContentTypes.`text/html(UTF-8)`, output)
-      )
-    )
-  }
-
-  def sendGETEvent(event: String): Unit = {
-    println(event)
-    println(event)
-    Http().singleRequest(
-      HttpRequest(
-        method = HttpMethods.GET,
-        uri = "http://localhost:7090/tui/events" + event
       )
     )
   }

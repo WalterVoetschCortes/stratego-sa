@@ -1,0 +1,34 @@
+version: "3.9"
+services:
+  tui:
+    container_name: "tui-service"
+    platform: linux/amd64
+    build:
+      context: ./Tui
+      dockerfile: ./Dockerfile
+    ports:
+      - "8082:8082"
+    stdin_open: true
+    #tty: true
+  fileio:
+    container_name: "fileio-service"
+    platform: linux/amd64
+    build:
+      context: ./FileIO
+      dockerfile: ./Dockerfile
+    ports:
+      - "8081:8081"
+  root:
+    container_name: "root-service"
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    stdin_open: true
+    depends_on:
+      - tui
+      - fileio
+    environment:
+      DISPLAY: host.docker.internal:0

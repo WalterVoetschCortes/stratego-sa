@@ -23,9 +23,11 @@ object TuiService extends Reactor {
   implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "my-system")
   implicit val executionContext: ExecutionContextExecutor = system.executionContext
 
-  val port = 7090
+  val tuiPort = 8082
+  val tuiUri = "tui-service"
 
-  val url = "localhost"
+  val rootPort = 8080
+  val rootUri = "root-service"
 
   def receivePOSTAndPublishEvent(eventPath: String, event: String => Event): Route = {
     path("tui" / "events" / eventPath) {
@@ -39,7 +41,7 @@ object TuiService extends Reactor {
   }
 
   def start(): Future[Http.ServerBinding] = {
-    Http().newServerAt(url, port).bind(
+    Http().newServerAt(tuiUri, tuiPort).bind(
       concat(
         receivePOSTAndPublishEvent("createNewMatchfield", field => new NewGame(field)),
         receivePOSTAndPublishEvent("fieldChanged", field => new FieldChanged(field)),
@@ -55,14 +57,14 @@ object TuiService extends Reactor {
 
   def stop(server: Future[Http.ServerBinding]): Unit = {
     server
-      .flatMap(_.unbind()).onComplete(_ => println(port + " released"))
+      .flatMap(_.unbind()).onComplete(_ => println(tuiPort + " released"))
   }
 
   def GETnoParam(commandPath: String): Unit = {
     Http().singleRequest(
       HttpRequest(
         method = HttpMethods.GET,
-        uri = "http://localhost:7070/controller/" + commandPath,
+        uri = s"http://${rootUri}:${rootPort}/controller/" + commandPath,
       )
     )
   }
@@ -71,7 +73,7 @@ object TuiService extends Reactor {
     Http().singleRequest(
       HttpRequest(
         method = HttpMethods.POST,
-        uri = "http://localhost:7070/controller/" + commandPath,
+        uri = s"http://${rootUri}:${rootPort}/controller/" + commandPath,
         entity = HttpEntity(ContentTypes.`text/html(UTF-8)`, input)
       )
     )
