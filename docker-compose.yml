@@ -2,7 +2,6 @@ version: "3.9"
 services:
   tui:
     container_name: "tui-service"
-    platform: linux/amd64
     build:
       context: ./Tui
       dockerfile: ./Dockerfile
@@ -12,7 +11,6 @@ services:
     #tty: true
   fileio:
     container_name: "fileio-service"
-    platform: linux/amd64
     build:
       context: ./FileIO
       dockerfile: ./Dockerfile
@@ -20,7 +18,6 @@ services:
       - "8081:8081"
   root:
     container_name: "root-service"
-    platform: linux/amd64
     build:
       context: .
       dockerfile: Dockerfile
