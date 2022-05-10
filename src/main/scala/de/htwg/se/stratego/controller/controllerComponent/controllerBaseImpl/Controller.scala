@@ -32,13 +32,13 @@ import scala.concurrent.Future
 import scala.concurrent.ExecutionContext
 import scala.concurrent.ExecutionContextExecutor
 
-class Controller @Inject()(var matchField:MatchFieldInterface) extends ControllerInterface with Publisher with LazyLogging:
+class Controller @Inject()(var matchField:MatchFieldInterface) extends ControllerInterface with Publisher:
 
 
   implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "SingleRequest")  
   implicit val executionContext: ExecutionContextExecutor = system.executionContext
 
-  val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = "http://localhost:8080/json"))
+  val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = "http://localhost:8083/load"))
 
   val injector = Guice.createInjector(new StrategoModule)
   val fileIO = injector.getInstance(classOf[FileIOInterface])
@@ -49,6 +49,9 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
   var game = Game(playerBlue, playerRed, matchField.fields.matrixSize, matchField)
   var playerList = List[Player](playerBlue,playerRed)
 
+  val uri = "fileio-service"
+  val port = 8081
+
   var gameStatus: GameStatus = IDLE
   var currentPlayerIndex: Int = 0
   private val undoManager = new UndoManager
@@ -56,7 +59,6 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
 
   def handle(input: String):String =
     state.handle(input)
-
 
   def welcome:String =
     "Welcome to STRATEGO! " +
@@ -277,8 +279,36 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
     gameStatus=SAVED
     val playerS = "" + players(0) + " " + players(1)
     val gamestate: String = Json.prettyPrint(matchFieldToJson(game.matchField, currentPlayerIndex, playerS))
-    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(method = HttpMethods.POST, uri = "http://localhost:8080/save", entity = gamestate))
+    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(method = HttpMethods.POST, uri =  s"http://${uri}:${port}/save", entity = gamestate))
     "save"
+  }
+
+  override def saveDB: Unit = {
+    val players = playerList
+    publish(new FieldChanged)
+    gameStatus=SAVED
+    val playerS = "" + players(0) + " " + players(1)
+    val gamestate: String = Json.prettyPrint(matchFieldToJson(game.matchField, currentPlayerIndex, playerS))
+    val dbfuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(method = HttpMethods.POST, uri = s"http://${uri}:${port}/saveDB", entity = gamestate))
+  }
+
+  override def loadDB: Unit = {
+    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = s"http://${uri}:${port}/loadDB"))
+    responseFuture.onComplete {
+      case Failure(_) => sys.error("HttpResponse failure")
+      case Success(res) => {
+        Unmarshal(res.entity).to[String].onComplete {
+          case Failure(_) => sys.error("Marshal failure")
+          case Success(result) => {
+            unpackJson(result)
+          }
+        }
+      }
+    }
+  }
+
+  override def deleteDB: Unit = {
+    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = s"http://${uri}:${port}/deleteDB"))
   }
 
 

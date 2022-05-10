@@ -15,10 +15,10 @@ object RootService extends Reactor {
 
   listenTo(controller)
 
-  implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "my-system")
+  implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "root")
   implicit val executionContext: ExecutionContextExecutor = system.executionContext
 
-  val rootPort = 8080
+  val rootPort = 8083
   val rootUri = "root-service"
 
   val tuiPort = 8082
@@ -48,6 +48,12 @@ object RootService extends Reactor {
         get {
           path("controller" / "redo") {
             controller.redo
+            complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, GameStatus.getMessage(controller.gameStatus)))
+          }
+        },
+        get {
+          path("controller" / "saveDB") {
+            controller.saveDB
             complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, GameStatus.getMessage(controller.gameStatus)))
           }
         },

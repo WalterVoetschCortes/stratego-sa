@@ -26,7 +26,7 @@ object TuiService extends Reactor {
   val tuiPort = 8082
   val tuiUri = "tui-service"
 
-  val rootPort = 8080
+  val rootPort = 8083
   val rootUri = "root-service"
 
   def receivePOSTAndPublishEvent(eventPath: String, event: String => Event): Route = {

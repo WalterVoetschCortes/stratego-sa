@@ -244,6 +244,21 @@ class GameFrame(controller:ControllerInterface) extends Frame:
         controller.load
         redraw
       })
+      contents += new MenuItem(Action("Load from DB") {
+        foreground = new Color(73,82,89)
+        controller.loadDB
+        redraw
+      })
+      contents += new MenuItem(Action("Save to DB") {
+        foreground = new Color(73,82,89)
+        controller.saveDB
+        redraw
+      })
+      contents += new MenuItem(Action("Delete Data in DB") {
+        foreground = new Color(73,82,89)
+        controller.deleteDB
+        redraw
+      })
     }
   }
 

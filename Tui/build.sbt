@@ -20,3 +20,9 @@ libraryDependencies += ("com.typesafe.akka" %% "akka-http" % "10.2.4").cross(Cro
 libraryDependencies += ("com.typesafe.akka" %% "akka-stream" % "2.6.8").cross(CrossVersion.for3Use2_13)
 libraryDependencies +=( "com.typesafe.akka" %% "akka-actor-typed" % "2.6.8").cross(CrossVersion.for3Use2_13)
 libraryDependencies +=( "com.typesafe.akka" %% "akka-actor" % "2.6.8").cross(CrossVersion.for3Use2_13)
+
+libraryDependencies +=("com.typesafe.slick" %% "slick-hikaricp" % "3.3.3").cross(CrossVersion.for3Use2_13)
+libraryDependencies +=("com.github.slick.slick" % "slick_3" % "nafg~dottyquery-SNAPSHOT")
+resolvers += "jitpack" at "https://jitpack.io"
+libraryDependencies += "org.slf4j" % "slf4j-nop" % "1.7.36"
+libraryDependencies += ("org.postgresql" % "postgresql" % "9.4-1200-jdbc41")

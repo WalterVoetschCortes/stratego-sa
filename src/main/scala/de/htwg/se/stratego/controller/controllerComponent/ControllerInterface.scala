@@ -8,6 +8,9 @@ import scala.swing.Publisher
 import scala.concurrent.ExecutionContext
 
 trait ControllerInterface extends Publisher :
+  def saveDB: Unit
+  def loadDB: Unit
+  def deleteDB: Unit
   def handle(input:String):String
   def welcome:String
   def setPlayers(input:String):String
@@ -29,9 +32,6 @@ trait ControllerInterface extends Publisher :
   def getField:Matrix[Field]
   def load:String
   def save:String
-
-
-
 
 import scala.swing.event.Event
 
