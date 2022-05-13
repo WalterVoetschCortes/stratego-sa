@@ -30,5 +30,7 @@ resolvers += "jitpack" at "https://jitpack.io"
 libraryDependencies += "org.slf4j" % "slf4j-nop" % "1.7.36"
 libraryDependencies += ("org.postgresql" % "postgresql" % "9.4-1200-jdbc41")
 
+libraryDependencies += ("net.codingwell" %% "scala-guice" % "5.0.2").cross(CrossVersion.for3Use2_13)
+libraryDependencies +=("org.mongodb.scala" %% "mongo-scala-driver" % "4.6.0").cross(CrossVersion.for3Use2_13)
 
 

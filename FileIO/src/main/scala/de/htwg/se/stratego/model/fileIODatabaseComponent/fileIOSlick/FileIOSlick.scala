@@ -82,7 +82,6 @@ case class FileIOSlick() extends FileIODatabaseInterface :
           })
           obj
         })))
-    println(string)
     string
 
   def readPlayer: (Int, Int, String, Int) =

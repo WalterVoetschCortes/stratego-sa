@@ -219,7 +219,6 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
   }
 
   def unpackJson(result: String): Unit = {
-    println(result)
     val json: JsValue = Json.parse(result)
     val injector = Guice.createInjector(new StrategoModule)
     var newMatchField = injector.getInstance(classOf[MatchFieldInterface])

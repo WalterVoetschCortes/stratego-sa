@@ -8,13 +8,18 @@ import akka.http.scaladsl.model.{ContentTypes, HttpEntity, StatusCode}
 import akka.http.scaladsl.server.Directives.*
 import de.htwg.se.stratego.model.fileIODatabaseComponent.fileIOSlick.FileIOSlick
 import de.htwg.se.stratego.model.fileIoComponent.fileIoJsonImpl.FileIO
+import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
+import com.google.inject.Guice
+import de.htwg.se.stratego.model.fileIODatabaseComponent.FileIOModule
+import de.htwg.se.stratego.model.fileIODatabaseComponent.FileIODatabaseInterface
 
 case object FileIOService {
 
   def main(args: Array[String]): Unit = {
 
     val fileIO = new FileIO
-    val slickDB = FileIOSlick()
+    val injector = Guice.createInjector(new FileIOModule)
+    val db = injector.getInstance(classOf[FileIODatabaseInterface])
     implicit val system = ActorSystem(Behaviors.empty, "fileIO")
     implicit val executionContext = system.executionContext
 
@@ -31,7 +36,7 @@ case object FileIOService {
         post {
           path("saveDB") {
             entity(as [String]) { game => {
-              slickDB.update(0, game)
+              db.update(0, game)
               complete(HttpResponse.apply(StatusCode.int2StatusCode(200)))
             }
             }
@@ -39,12 +44,12 @@ case object FileIOService {
         },
         get {
           path("loadDB") {
-            complete(HttpEntity(ContentTypes.`application/json`, slickDB.read(0)))
+            complete(HttpEntity(ContentTypes.`application/json`, db.read(0)))
           }
         },
         get {
           path("deleteDB") {
-            slickDB.delete()
+            db.delete()
             complete(HttpResponse.apply(StatusCode.int2StatusCode(200)))
           }
         },
