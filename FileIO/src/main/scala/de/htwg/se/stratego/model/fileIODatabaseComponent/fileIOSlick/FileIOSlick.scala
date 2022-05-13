@@ -1,18 +1,20 @@
 package de.htwg.se.stratego.model.fileIODatabaseComponent.fileIOSlick
 
 import de.htwg.se.stratego.model.fileIODatabaseComponent.FileIODatabaseInterface
-import play.api.libs.json.{JsArray, JsNumber, JsObject, JsValue, Json}
-import slick.jdbc.PostgresProfile.api.*
+import de.htwg.se.stratego.model.fileIODatabaseComponent.fileIOSlick.{SlickMatchfield, SlickPlayer}
+import play.api.libs.json.{JsArray, JsNumber, JsString, JsValue, Json}
 import slick.jdbc.JdbcBackend.Database
 import slick.lifted.TableQuery
+import slick.jdbc.PostgresProfile.api.*
 
-import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.collection.mutable.ListBuffer
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
+import scala.util.{Failure, Success}
 
-case class FileIOSlick() extends FileIODatabaseInterface:
-  val database = Database.forURL("jdbc:postgresql://db:5432/postgres", "postgres", "postgres", driver = "org.postgresql.Driver")
+case class FileIOSlick() extends FileIODatabaseInterface :
+  val database = Database.forURL("jdbc:postgresql://localhost:5432/postgres", "postgres", "postgres", driver = "org.postgresql.Driver")
 
   val slickplayertable = TableQuery[SlickPlayer]
   val slickmatchfieldtable = TableQuery[SlickMatchfield]
@@ -24,11 +26,12 @@ case class FileIOSlick() extends FileIODatabaseInterface:
     Await.ready(database.run(slickplayertable.delete), Duration.Inf)
     Await.ready(database.run(slickmatchfieldtable.delete), Duration.Inf)
 
-  def update(game: String): Unit =
+  def update(id:Int, game: String): Unit =
     val json: JsValue = Json.parse(game)
     val newPlayerIndex = (json \ "currentPlayerIndex").get.toString().toInt
-    val players = (json \ "players").get.toString()
+    val players = (json \ "players").as[String]
     val sizeOfMatchfield: Int = (json \ "matchField").as[JsArray].value.size
+    var matchfield = (0, 0, 0, Option(""), Option(0), Option(0))
     var figName: String = ""
     var figValue: Int = 0
     var colour: Int = 0
@@ -43,16 +46,21 @@ case class FileIOSlick() extends FileIODatabaseInterface:
         figName = ""
         figValue = 0
         colour = 0
-      database.run(slickmatchfieldtable += (0, row, col, Option(figName), Option(figValue), Option(colour)))
+
+      matchfield = (0, row, col, Option(figName), Option(figValue), Option(colour))
+      database.run(slickmatchfieldtable += matchfield).andThen{
+        case Success(_) => println("Success")
+        case Failure(e) => println(s"Failure: ${e.getMessage}")
+      }
 
     database.run(slickplayertable += (0, newPlayerIndex, players, sizeOfMatchfield))
 
-  override def readMatchfield: String =
+  override def read(id:Int): String =
     val player: (Int, Int, String, Int) = readPlayer
     val matchfield: ListBuffer[(Int, Int, Int, Option[String], Option[Int], Option[Int])] = readMatchfieldfromdb
     val string = Json.prettyPrint(Json.obj(
       "currentPlayerIndex" -> JsNumber(player._2),
-      "players" -> player._3,
+      "players" -> JsString(player._3).value,
       "matchField" -> Json.toJson(
         for {
           row <- 0 until Math.sqrt(player._4).toInt
@@ -63,26 +71,27 @@ case class FileIOSlick() extends FileIODatabaseInterface:
             "col" -> col
           )
           matchfield.foreach(f => {
-            if (f(1) == row && f(2) == col && !f(3).equals(Option(""))) {
+            if (f._2 == row && f._3 == col && !f._4.equals(Option(""))) {
               obj = obj.++(Json.obj(
-                "figName" -> f(3),
-                "figValue" -> f(4),
-                "colour" -> f(5)
+                "figName" -> f._4,
+                "figValue" -> f._5,
+                "colour" -> f._6
               )
               )
             }
           })
           obj
         })))
+    println(string)
     string
 
   def readPlayer: (Int, Int, String, Int) =
     val player@(id, playerIndex, players, sizeOfMatchfield) = Await.result(database.run(slickplayertable.result.head), Duration.Inf)
-    println(id.toString + " " + playerIndex.toString + " " + players + " " + sizeOfMatchfield)
+
     (id, playerIndex, players, sizeOfMatchfield)
 
   def readMatchfieldfromdb: ListBuffer[(Int, Int, Int, Option[String], Option[Int], Option[Int])] =
-    var matchfieldlist: ListBuffer[(Int, Int, Int, Option[String], Option[Int], Option[Int])] = ListBuffer.empty
-    Await.result(database.run(slickmatchfieldtable.result.map(_.foreach(f => matchfieldlist.append((f(0), f(1), f(2), f(3), f(4), f(5)))))), Duration.Inf)
-    matchfieldlist.foreach(f => println(f))
+    val matchfieldlist: ListBuffer[(Int, Int, Int, Option[String], Option[Int], Option[Int])] = ListBuffer.empty
+    Await.result(database.run(slickmatchfieldtable.result.map(_.foreach(f => matchfieldlist.append((f._1, f._2, f._3, f._4, f._5, f._6))))), Duration.Inf)
     matchfieldlist
+

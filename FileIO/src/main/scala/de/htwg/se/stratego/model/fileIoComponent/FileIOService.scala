@@ -19,7 +19,7 @@ case object FileIOService {
     implicit val executionContext = system.executionContext
 
     val fileIOPort = 8081
-    val fileIOUri = "fileio-service"
+    val fileIOUri = "localhost" //"fileio-service"
 
     val route =
       concat (
@@ -31,7 +31,7 @@ case object FileIOService {
         post {
           path("saveDB") {
             entity(as [String]) { game => {
-              slickDB.update(game)
+              slickDB.update(0, game)
               complete(HttpResponse.apply(StatusCode.int2StatusCode(200)))
             }
             }
@@ -39,28 +39,24 @@ case object FileIOService {
         },
         get {
           path("loadDB") {
-            println("load json from db")
-            complete(HttpEntity(ContentTypes.`application/json`, slickDB.readMatchfield))
+            complete(HttpEntity(ContentTypes.`application/json`, slickDB.read(0)))
           }
         },
         get {
           path("deleteDB") {
             slickDB.delete()
-            println("data in tables deleted")
             complete(HttpResponse.apply(StatusCode.int2StatusCode(200)))
           }
         },
         get {
-          path("json") {
-            println("load json")
+          path("load") {
             complete(HttpEntity(ContentTypes.`application/json`, fileIO.load))
           }
         },
         post {
-          path("json") {
+          path("save") {
             entity(as [String]) { game =>
               fileIO.save(game)
-              println("game saved")
               complete(HttpResponse.apply(StatusCode.int2StatusCode(200)))
             }
           }

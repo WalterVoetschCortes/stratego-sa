@@ -3,14 +3,13 @@ package de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl
 import com.google.inject.{Guice, Inject}
 import de.htwg.se.stratego.StrategoModule
 import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, MachtfieldInitialized, NewGame, PlayerChanged, PlayerSwitch}
-import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
+import de.htwg.se.stratego.controller.controllerComponent.GameStatus.*
 import de.htwg.se.stratego.model.fileIoComponent.FileIOInterface
 import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{CharacterList, Field, Game, MatchField, Matrix}
 import de.htwg.se.stratego.model.playerComponent.Player
 import de.htwg.se.stratego.util.UndoManager
 import de.htwg.se.stratego.controller.controllerComponent.RootService.system
-
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.javadsl.Behaviors
 import akka.http.scaladsl.Http
@@ -18,16 +17,13 @@ import akka.http.scaladsl.model.{HttpMethods, HttpRequest, HttpResponse}
 import akka.http.scaladsl.unmarshalling.Unmarshal
 
 import scala.swing.Publisher
-
-import scala.util.{Success, Failure}
+import scala.util.{Failure, Success}
 import com.typesafe.scalalogging.{LazyLogging, Logger}
-import play.api.libs.json.Json
-import play.api.libs.json.JsValue
+import play.api.libs.json.{JsNumber, JsObject, JsString, JsValue, Json}
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.GameCharacter
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.Figure
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.Colour
-import play.api.libs.json.JsNumber
-import play.api.libs.json.JsObject
+
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext
 import scala.concurrent.ExecutionContextExecutor
@@ -38,7 +34,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
   implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "SingleRequest")  
   implicit val executionContext: ExecutionContextExecutor = system.executionContext
 
-  val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = "http://localhost:8083/load"))
+  val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = "http://localhost:8081/load"))
 
   val injector = Guice.createInjector(new StrategoModule)
   val fileIO = injector.getInstance(classOf[FileIOInterface])
@@ -49,7 +45,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
   var game = Game(playerBlue, playerRed, matchField.fields.matrixSize, matchField)
   var playerList = List[Player](playerBlue,playerRed)
 
-  val uri = "fileio-service"
+  val uri = "localhost"//fileio-service"
   val port = 8081
 
   var gameStatus: GameStatus = IDLE
@@ -223,11 +219,12 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
   }
 
   def unpackJson(result: String): Unit = {
+    println(result)
     val json: JsValue = Json.parse(result)
     val injector = Guice.createInjector(new StrategoModule)
     var newMatchField = injector.getInstance(classOf[MatchFieldInterface])
     val newPlayerIndex = (json \ "currentPlayerIndex").get.toString().toInt
-    val playerS = (json \ "players").get.toString()
+    val playerS = (json \ "players").as[String]
     for index <- 0 until newMatchField.fields.matrixSize * newMatchField.fields.matrixSize do
       val row = (json \\ "row")(index).as[Int]
       val col = (json \\ "col")(index).as[Int]
@@ -249,7 +246,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
   def matchFieldToJson(matchField: MatchFieldInterface, currentPlayerIndex: Int, players: String): JsObject = {
     Json.obj(
       "currentPlayerIndex" -> JsNumber(currentPlayerIndex),
-      "players" -> players,
+      "players" -> JsString(players).value,
       "matchField"-> Json.toJson(
         for{
           row <- 0 until matchField.fields.matrixSize
@@ -277,7 +274,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
     val players = playerList
     publish(new FieldChanged)
     gameStatus=SAVED
-    val playerS = "" + players(0) + " " + players(1)
+    val playerS = players(0).toString + " " + players(1).toString
     val gamestate: String = Json.prettyPrint(matchFieldToJson(game.matchField, currentPlayerIndex, playerS))
     val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(method = HttpMethods.POST, uri =  s"http://${uri}:${port}/save", entity = gamestate))
     "save"
@@ -287,7 +284,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
     val players = playerList
     publish(new FieldChanged)
     gameStatus=SAVED
-    val playerS = "" + players(0) + " " + players(1)
+    val playerS = players(0).toString + " " + players(1).toString
     val gamestate: String = Json.prettyPrint(matchFieldToJson(game.matchField, currentPlayerIndex, playerS))
     val dbfuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(method = HttpMethods.POST, uri = s"http://${uri}:${port}/saveDB", entity = gamestate))
   }

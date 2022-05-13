@@ -15,7 +15,7 @@ object RootService extends Reactor {
 
   listenTo(controller)
 
-  implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "root")
+  implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "SingleRequest")
   implicit val executionContext: ExecutionContextExecutor = system.executionContext
 
   val rootPort = 8083

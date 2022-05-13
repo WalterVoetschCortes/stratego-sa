@@ -1,7 +1,7 @@
 package de.htwg.se.stratego.model.fileIODatabaseComponent.fileIOSlick
 
-import slick.lifted.ProvenShape
 import slick.jdbc.PostgresProfile.api.*
+import slick.lifted.ProvenShape
 
 class SlickPlayer(tag: Tag) extends Table[(Int, Int, String, Int)](tag, "player") :
 
