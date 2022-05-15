@@ -236,13 +236,12 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
     matchField = newMatchField
     currentPlayerIndex = newPlayerIndex
     playerList = game.setPlayers(playerS)
-
     state = GameState(this)
     gameStatus=LOADED
     publish(new FieldChanged)
   }
 
-  def matchFieldToJson(matchField: MatchFieldInterface, currentPlayerIndex: Int, players: String): JsObject = {
+  def matchFieldToJson(currentPlayerIndex: Int, players: String): JsObject = {
     Json.obj(
       "currentPlayerIndex" -> JsNumber(currentPlayerIndex),
       "players" -> JsString(players).value,
@@ -274,7 +273,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
     publish(new FieldChanged)
     gameStatus=SAVED
     val playerS = players(0).toString + " " + players(1).toString
-    val gamestate: String = Json.prettyPrint(matchFieldToJson(game.matchField, currentPlayerIndex, playerS))
+    val gamestate: String = Json.prettyPrint(matchFieldToJson(currentPlayerIndex, playerS))
     val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(method = HttpMethods.POST, uri =  s"http://${uri}:${port}/save", entity = gamestate))
     "save"
   }
@@ -284,7 +283,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
     publish(new FieldChanged)
     gameStatus=SAVED
     val playerS = players(0).toString + " " + players(1).toString
-    val gamestate: String = Json.prettyPrint(matchFieldToJson(game.matchField, currentPlayerIndex, playerS))
+    val gamestate: String = Json.prettyPrint(matchFieldToJson(currentPlayerIndex, playerS))
     val dbfuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(method = HttpMethods.POST, uri = s"http://${uri}:${port}/saveDB", entity = gamestate))
   }
 

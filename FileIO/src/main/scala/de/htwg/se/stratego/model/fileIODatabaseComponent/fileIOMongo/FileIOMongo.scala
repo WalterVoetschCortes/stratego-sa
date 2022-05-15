@@ -25,7 +25,7 @@ class FileIOMongo extends FileIODatabaseInterface:
     observerInsertion(collection.insertOne(doc))
 
   override def delete(): Unit =
-    collection.deleteOne(equal("_id", 1)).subscribe(
+    collection.deleteOne(equal("_id", 0)).subscribe(
       (dr: DeleteResult) => print(s"Deleted document with id 1\n"),
       (e: Throwable) => print(s"Error when deleting the document with id 1: $e\n")
     )
