@@ -19,10 +19,10 @@ object RootService extends Reactor {
   implicit val executionContext: ExecutionContextExecutor = system.executionContext
 
   val rootPort = 8083
-  val rootUri = "root-service"
+  val rootUri = "localhost" //"root-service"
 
   val tuiPort = 8082
-  val tuiUri = "tui-service"
+  val tuiUri = "localhost" //"tui-service"
 
   def server(): Future[Http.ServerBinding] = {
     val route =

@@ -11,13 +11,18 @@ import scala.concurrent.duration.DurationInt
 
 
 class FileIOMongo extends FileIODatabaseInterface:
-  val connectionString: String = "mongodb+srv://stratego:stratego@strategodb.sduh7.mongodb.net/strategodb?retryWrites=true&w=majority"
-  System.setProperty("org.mongodb.async.type", "netty")
+  //Cloud:
+//  val connectionString: String = "mongodb+srv://stratego:stratego@strategodb.sduh7.mongodb.net/strategodb?retryWrites=true&w=majority"
+//  System.setProperty("org.mongodb.async.type", "netty")
+//  val mongoClient: MongoClient = MongoClient(connectionString)
+//  val database: MongoDatabase = mongoClient.getDatabase("strategodb")
+//  val collection: MongoCollection[Document] = database.getCollection("FileIO")
+
+  //Local:
+  val connectionString: String = "mongodb://localhost:27017"
   val mongoClient: MongoClient = MongoClient(connectionString)
-  val database: MongoDatabase = mongoClient.getDatabase("strategodb")
-
+  val database: MongoDatabase = mongoClient.getDatabase("Stratego")
   val collection: MongoCollection[Document] = database.getCollection("FileIO")
-
 
   override def update(id: Int, game: String): Unit =
     delete()

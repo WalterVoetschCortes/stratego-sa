@@ -24,10 +24,10 @@ object TuiService extends Reactor {
   implicit val executionContext: ExecutionContextExecutor = system.executionContext
 
   val tuiPort = 8082
-  val tuiUri = "tui-service"
+  val tuiUri = "localhost"// "tui-service"
 
   val rootPort = 8083
-  val rootUri = "root-service"
+  val rootUri = "localhost" // "root-service"
 
   def receivePOSTAndPublishEvent(eventPath: String, event: String => Event): Route = {
     path("tui" / "events" / eventPath) {
