@@ -13,6 +13,8 @@ import com.google.inject.Guice
 import de.htwg.se.stratego.model.fileIODatabaseComponent.FileIOModule
 import de.htwg.se.stratego.model.fileIODatabaseComponent.FileIODatabaseInterface
 
+import scala.util.{Success, Failure}
+
 case object FileIOService {
 
   def main(args: Array[String]): Unit = {
@@ -69,5 +71,16 @@ case object FileIOService {
       )
 
     val bindingFuture = Http().newServerAt(fileIOUri, fileIOPort).bind(route)
+
+    bindingFuture.onComplete{
+      case Success(binding) => {
+        val address = binding.localAddress
+        println(s"File IO Save: http://${address.getHostName}:${address.getPort}/${"save"}\n" +
+          s"File IO Load: http://${address.getHostName}:${address.getPort}/${"load"} \n")
+      }
+      case Failure(exception) => {
+        println("File IO REST service couldn't be started! Error: " + exception + "\n")
+      }
+    }
   }
 }

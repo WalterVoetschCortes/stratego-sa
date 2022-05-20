@@ -58,7 +58,9 @@ case class FileIOSlick() extends FileIODatabaseInterface :
 
   override def read(id:Int): String =
     val player: (Int, Int, String, Int) = readPlayer
-    val matchfield: ListBuffer[(Int, Int, Int, Option[String], Option[Int], Option[Int])] = readMatchfieldfromdb
+    val matchfieldlist: ListBuffer[(Int, Int, Int, Option[String], Option[Int], Option[Int])] = ListBuffer.empty
+    Await.result(database.run(slickmatchfieldtable.result.map(_.foreach(f => matchfieldlist.append((f._1, f._2, f._3, f._4, f._5, f._6))))), Duration.Inf)
+    val matchfield: ListBuffer[(Int, Int, Int, Option[String], Option[Int], Option[Int])] = matchfieldlist
     val string = Json.prettyPrint(Json.obj(
       "currentPlayerIndex" -> JsNumber(player._2),
       "players" -> JsString(player._3).value,
@@ -90,8 +92,4 @@ case class FileIOSlick() extends FileIODatabaseInterface :
 
     (id, playerIndex, players, sizeOfMatchfield)
 
-  def readMatchfieldfromdb: ListBuffer[(Int, Int, Int, Option[String], Option[Int], Option[Int])] =
-    val matchfieldlist: ListBuffer[(Int, Int, Int, Option[String], Option[Int], Option[Int])] = ListBuffer.empty
-    Await.result(database.run(slickmatchfieldtable.result.map(_.foreach(f => matchfieldlist.append((f._1, f._2, f._3, f._4, f._5, f._6))))), Duration.Inf)
-    matchfieldlist
 
