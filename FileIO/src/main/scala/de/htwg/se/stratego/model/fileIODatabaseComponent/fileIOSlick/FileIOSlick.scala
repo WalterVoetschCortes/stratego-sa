@@ -27,7 +27,8 @@ case class FileIOSlick() extends FileIODatabaseInterface :
     Await.ready(database.run(slickmatchfieldtable.delete), Duration.Inf)
 
   def update(id:Int, game: String): Unit =
-    delete()
+    Await.ready(database.run(slickplayertable.delete), Duration.Inf)
+    Await.ready(database.run(slickmatchfieldtable.delete), Duration.Inf)
     val json: JsValue = Json.parse(game)
     val newPlayerIndex = (json \ "currentPlayerIndex").get.toString().toInt
     val players = (json \ "players").as[String]
