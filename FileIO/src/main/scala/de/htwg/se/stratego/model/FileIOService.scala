@@ -1,27 +1,25 @@
-package de.htwg.se.stratego.model.fileIoComponent
+package de.htwg.se.stratego.model
 
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
-import akka.http.scaladsl.model.HttpResponse
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.{ContentTypes, HttpEntity, StatusCode}
-import akka.http.scaladsl.server.Directives.*
-import de.htwg.se.stratego.model.fileIODatabaseComponent.fileIOSlick.FileIOSlick
-import de.htwg.se.stratego.model.fileIoComponent.fileIoJsonImpl.FileIO
-import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
+import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse, StatusCode}
+import akka.http.scaladsl.server.Directives.{as, complete, concat, entity, get, path, post}
 import com.google.inject.Guice
-import de.htwg.se.stratego.model.fileIODatabaseComponent.FileIOModule
-import de.htwg.se.stratego.model.fileIODatabaseComponent.FileIODatabaseInterface
+import de.htwg.se.stratego.model.fileIODatabaseComponent.{FileIODatabaseInterface, FileIODatabaseProxy}
+import de.htwg.se.stratego.model.fileIoComponent.fileIoJsonImpl.FileIO
+import de.htwg.se.stratego.model.FileIOModule
+import de.htwg.se.stratego.model.fileIODatabaseComponent.FileIODatabaseProxy
+import de.htwg.se.stratego.model.fileIoComponent.FileIOInterface
 
-import scala.util.{Success, Failure}
+import scala.util.{Failure, Success}
 
 case object FileIOService {
 
   def main(args: Array[String]): Unit = {
-
-    val fileIO = new FileIO
     val injector = Guice.createInjector(new FileIOModule)
-    val db = injector.getInstance(classOf[FileIODatabaseInterface])
+    val fileIO = injector.getInstance(classOf[FileIOInterface])
+    val db = new FileIODatabaseProxy
     implicit val system = ActorSystem(Behaviors.empty, "fileIO")
     implicit val executionContext = system.executionContext
 
@@ -29,15 +27,10 @@ case object FileIOService {
     val fileIOUri = "localhost" //"fileio-service"
 
     val route =
-      concat (
-        get {
-          path("createTables") {
-            complete(HttpResponse.apply(StatusCode.int2StatusCode(200)))
-          }
-        },
+      concat(
         post {
           path("saveDB") {
-            entity(as [String]) { game => {
+            entity(as[String]) { game => {
               db.update(0, game)
               complete(HttpResponse.apply(StatusCode.int2StatusCode(200)))
             }
@@ -62,7 +55,7 @@ case object FileIOService {
         },
         post {
           path("save") {
-            entity(as [String]) { game =>
+            entity(as[String]) { game =>
               fileIO.save(game)
               complete(HttpResponse.apply(StatusCode.int2StatusCode(200)))
             }
@@ -72,7 +65,7 @@ case object FileIOService {
 
     val bindingFuture = Http().newServerAt(fileIOUri, fileIOPort).bind(route)
 
-    bindingFuture.onComplete{
+    bindingFuture.onComplete {
       case Success(binding) => {
         val address = binding.localAddress
         println(s"File IO Save: http://${address.getHostName}:${address.getPort}/${"save"}\n" +
