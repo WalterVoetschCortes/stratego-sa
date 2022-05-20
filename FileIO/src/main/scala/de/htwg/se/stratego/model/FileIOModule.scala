@@ -10,6 +10,6 @@ import de.htwg.se.stratego.model.fileIoComponent.fileIoJsonImpl.FileIO
 class FileIOModule extends AbstractModule:
 
   override def configure(): Unit =
-    bind(classOf[FileIODatabaseInterface]).to(classOf[FileIOSlick])
+    bind(classOf[FileIODatabaseInterface]).to(classOf[FileIOMongo])
     bind(classOf[FileIOInterface]).to(classOf[FileIO])
 

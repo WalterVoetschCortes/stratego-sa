@@ -1,0 +1,10 @@
+{
+  "simulation": "Testing_FullDB",
+  "simulationId": "testing-fulldb",
+  "start": 1652961100306,
+  "description": "0",
+  "scenarios": ["Load Simulation", "Spike Simulation", "Stress Simulation", "Endurance Simulation"],
+  "assertions": [
+
+  ]
+}
