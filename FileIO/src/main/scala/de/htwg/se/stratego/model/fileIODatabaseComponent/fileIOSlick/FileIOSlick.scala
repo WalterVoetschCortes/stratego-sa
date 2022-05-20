@@ -57,7 +57,8 @@ case class FileIOSlick() extends FileIODatabaseInterface :
     database.run(slickplayertable += (0, newPlayerIndex, players, sizeOfMatchfield))
 
   override def read(id:Int): String =
-    val player: (Int, Int, String, Int) = readPlayer
+    val p@(id, playerIndex, players, sizeOfMatchfield) = Await.result(database.run(slickplayertable.result.head), Duration.Inf)
+    val player: (Int, Int, String, Int) = (id, playerIndex, players, sizeOfMatchfield)
     val matchfieldlist: ListBuffer[(Int, Int, Int, Option[String], Option[Int], Option[Int])] = ListBuffer.empty
     Await.result(database.run(slickmatchfieldtable.result.map(_.foreach(f => matchfieldlist.append((f._1, f._2, f._3, f._4, f._5, f._6))))), Duration.Inf)
     val matchfield: ListBuffer[(Int, Int, Int, Option[String], Option[Int], Option[Int])] = matchfieldlist
@@ -87,9 +88,5 @@ case class FileIOSlick() extends FileIODatabaseInterface :
         })))
     string
 
-  def readPlayer: (Int, Int, String, Int) =
-    val player@(id, playerIndex, players, sizeOfMatchfield) = Await.result(database.run(slickplayertable.result.head), Duration.Inf)
-
-    (id, playerIndex, players, sizeOfMatchfield)
 
 
