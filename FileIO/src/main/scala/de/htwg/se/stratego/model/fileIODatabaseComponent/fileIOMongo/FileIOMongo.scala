@@ -9,9 +9,7 @@ import scala.concurrent.Await
 import scala.concurrent.duration.DurationInt
 import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
-import akka.actor.TypedActor.dispatcher
-import concurrent.ExecutionContext.Implicits.global
-
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class FileIOMongo extends FileIODatabaseInterface:
   //Cloud:
@@ -43,5 +41,5 @@ class FileIOMongo extends FileIODatabaseInterface:
 
   override def read(id: Int): Future[String] =
     val resultgame: Document = Await.result(collection.find(equal("_id", id)).first().head(), atMost = 10.second)
-    val game: String = resultgame("game").asString().getValue
-    Future(game)
+    val game: Future[String] = Future(resultgame("game").asString().getValue)
+    game

@@ -7,13 +7,11 @@ import slick.jdbc.JdbcBackend.Database
 import slick.lifted.TableQuery
 import slick.jdbc.PostgresProfile.api.*
 import scala.concurrent.Future
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 import scala.util.{Failure, Success, Try}
-import akka.actor.TypedActor.dispatcher
-import concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class FileIOSlick extends FileIODatabaseInterface :
 
@@ -39,6 +37,10 @@ class FileIOSlick extends FileIODatabaseInterface :
     var figName: String = ""
     var figValue: Int = 0
     var colour: Int = 0
+    database.run(slickplayertable += (0, newPlayerIndex, players, sizeOfMatchfield)).andThen{
+      case Success(_) => println("Success")
+      case Failure(e) => println(s"Failure: ${e.getMessage}")
+    }
     for (index <- 0 until sizeOfMatchfield)
       val row = (json \\ "row") (index).as[Int]
       val col = (json \\ "col") (index).as[Int]
@@ -57,15 +59,12 @@ class FileIOSlick extends FileIODatabaseInterface :
         case Failure(e) => println(s"Failure: ${e.getMessage}")
       }
 
-    database.run(slickplayertable += (0, newPlayerIndex, players, sizeOfMatchfield))
-
   override def read(id:Int): Future[String] =
-    val p@(id, playerIndex, players, sizeOfMatchfield) = Await.result(database.run(slickplayertable.result.head), Duration.Inf)
-    val player: (Int, Int, String, Int) = (id, playerIndex, players, sizeOfMatchfield)
     val matchfieldlist: ListBuffer[(Int, Int, Int, Option[String], Option[Int], Option[Int])] = ListBuffer.empty
     Await.result(database.run(slickmatchfieldtable.result.map(_.foreach(f => matchfieldlist.append((f._1, f._2, f._3, f._4, f._5, f._6))))), Duration.Inf)
     val matchfield: ListBuffer[(Int, Int, Int, Option[String], Option[Int], Option[Int])] = matchfieldlist
-    val string = Json.prettyPrint(Json.obj(
+    val player: (Int, Int, String, Int) = Await.result(database.run(slickplayertable.result.head), Duration.Inf)
+    val result: Future[String]= Future(Json.prettyPrint(Json.obj(
       "currentPlayerIndex" -> JsNumber(player._2),
       "players" -> JsString(player._3).value,
       "matchField" -> Json.toJson(
@@ -88,8 +87,6 @@ class FileIOSlick extends FileIODatabaseInterface :
             }
           })
           obj
-        })))
-    Future(string)
-
-
+        }))))
+    result
 
