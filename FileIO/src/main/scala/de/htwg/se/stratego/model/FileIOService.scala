@@ -11,7 +11,8 @@ import de.htwg.se.stratego.model.fileIoComponent.fileIoJsonImpl.FileIO
 import de.htwg.se.stratego.model.FileIOModule
 import de.htwg.se.stratego.model.fileIODatabaseComponent.FileIODatabaseProxy
 import de.htwg.se.stratego.model.fileIoComponent.FileIOInterface
-
+import scala.concurrent.{Await, Future}
+import scala.concurrent.duration.Duration
 import scala.util.{Failure, Success}
 
 case object FileIOService {
@@ -39,7 +40,7 @@ case object FileIOService {
         },
         get {
           path("loadDB") {
-            complete(HttpEntity(ContentTypes.`application/json`, db.read(0)))
+            complete(HttpEntity(ContentTypes.`application/json`, Await.result(db.read(0), Duration.Inf)))
           }
         },
         get {
@@ -68,8 +69,8 @@ case object FileIOService {
     bindingFuture.onComplete {
       case Success(binding) => {
         val address = binding.localAddress
-        println(s"File IO Save: http://${address.getHostName}:${address.getPort}/${"save"}\n" +
-          s"File IO Load: http://${address.getHostName}:${address.getPort}/${"load"} \n")
+        println(s"File IO Save: http://${address.getHostName}:${address.getPort}/${"saveDB"}\n" +
+          s"File IO Load: http://${address.getHostName}:${address.getPort}/${"loadDB"} \n")
       }
       case Failure(exception) => {
         println("File IO REST service couldn't be started! Error: " + exception + "\n")

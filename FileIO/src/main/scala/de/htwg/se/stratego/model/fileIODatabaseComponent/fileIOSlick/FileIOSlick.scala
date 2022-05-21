@@ -6,23 +6,25 @@ import play.api.libs.json.{JsArray, JsNumber, JsString, JsValue, Json}
 import slick.jdbc.JdbcBackend.Database
 import slick.lifted.TableQuery
 import slick.jdbc.PostgresProfile.api.*
-
+import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
-import scala.util.{Failure, Success}
+import scala.util.{Failure, Success, Try}
+import akka.actor.TypedActor.dispatcher
+import concurrent.ExecutionContext.Implicits.global
 
-case class FileIOSlick() extends FileIODatabaseInterface :
+class FileIOSlick extends FileIODatabaseInterface :
+
   val database = Database.forURL("jdbc:postgresql://localhost:5432/postgres", "postgres", "postgres", driver = "org.postgresql.Driver")
-
   val slickplayertable = TableQuery[SlickPlayer]
   val slickmatchfieldtable = TableQuery[SlickMatchfield]
   val tables = List(slickplayertable, slickmatchfieldtable)
 
   tables.foreach(e => Await.result(database.run(e.schema.createIfNotExists), Duration.Inf))
 
-  def delete(): Unit =
+  def delete(): Future[Any] =
     Await.ready(database.run(slickplayertable.delete), Duration.Inf)
     Await.ready(database.run(slickmatchfieldtable.delete), Duration.Inf)
 
@@ -57,7 +59,7 @@ case class FileIOSlick() extends FileIODatabaseInterface :
 
     database.run(slickplayertable += (0, newPlayerIndex, players, sizeOfMatchfield))
 
-  override def read(id:Int): String =
+  override def read(id:Int): Future[String] =
     val p@(id, playerIndex, players, sizeOfMatchfield) = Await.result(database.run(slickplayertable.result.head), Duration.Inf)
     val player: (Int, Int, String, Int) = (id, playerIndex, players, sizeOfMatchfield)
     val matchfieldlist: ListBuffer[(Int, Int, Int, Option[String], Option[Int], Option[Int])] = ListBuffer.empty
@@ -87,7 +89,7 @@ case class FileIOSlick() extends FileIODatabaseInterface :
           })
           obj
         })))
-    string
+    Future(string)
 
 
 
