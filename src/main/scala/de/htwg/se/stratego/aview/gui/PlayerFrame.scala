@@ -11,7 +11,7 @@ import scala.swing.event.ButtonClicked
 import scala.swing.{Button, Dimension, FlowPanel, Frame, GridPanel, Label, TextField}
 import java.io.File
 
-class PlayerFrame(controller:ControllerInterface) extends Frame{
+class PlayerFrame(controller:ControllerInterface) extends Frame:
 
   listenTo(controller)
 
@@ -115,9 +115,8 @@ class PlayerFrame(controller:ControllerInterface) extends Frame{
   reactions += {
     case ButtonClicked(`next`) =>
         listenTo(controller)
-      if(player1.text.isEmpty || player2.text.isEmpty) {
+      if player1.text.isEmpty || player2.text.isEmpty then
         controller.handle("Player1"+ " "+ "Player2")
-      }
       controller.handle(player1.text+ " "+ player2.text)
   }
   reactions += {
@@ -154,4 +153,3 @@ class PlayerFrame(controller:ControllerInterface) extends Frame{
 
   contents = mainPanel
 
-}

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ScalaCompilerConfiguration">
+    <profile name="sbt 1" modules="FileIO,MatchField,Stratego,Stratego.Tui,Tui,stratego-sa.Tui,stratego-sa_5779,stratego-sa_9407" />
+  </component>
+</project>

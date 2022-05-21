@@ -4,7 +4,7 @@ import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.MatchField
 import de.htwg.se.stratego.util.Command
 
-class MoveCommand(dir: Char, matchField: MatchFieldInterface, row: Int, col: Int, currentPlayerIndex: Int, controller: Controller) extends Command {
+class MoveCommand(dir: Char, matchField: MatchFieldInterface, row: Int, col: Int, currentPlayerIndex: Int, controller: Controller) extends Command :
 
   override def doStep: Unit =   controller.matchField = controller.game.move(dir, matchField, row, col, currentPlayerIndex)
 
@@ -18,4 +18,4 @@ class MoveCommand(dir: Char, matchField: MatchFieldInterface, row: Int, col: Int
 
   override def redoStep: Unit = controller.matchField = controller.game.move(dir, matchField, row, col, currentPlayerIndex)
 
-}
+
